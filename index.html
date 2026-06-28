@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>לוח שחרורים חי — מחלקת יולדות</title>
+<style>
+  :root{
+    --bg:#0f1729; --panel:#16203a; --panel2:#1d2b4a; --line:#2a3a5e;
+    --txt:#e8eef9; --muted:#9bb0d3; --accent:#3b82f6; --accent2:#60a5fa;
+    --pending:#64748b; --prep:#d97706; --attn:#dc2626; --done:#16a34a;
+    --shadow:0 8px 28px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:linear-gradient(160deg,#0b1222,#0f1729 40%,#101a30);
+    color:var(--txt); font-family:"Segoe UI","Heebo",Arial,sans-serif; min-height:100vh;
+  }
+  header{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:14px 20px; background:rgba(13,20,38,.85); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50;
+  }
+  header h1{font-size:19px; margin:0; font-weight:700; letter-spacing:.2px}
+  header .sub{font-size:12px; color:var(--muted); margin-top:2px}
+  .grow{flex:1}
+  .role-wrap{display:flex; align-items:center; gap:8px}
+  .role-wrap label{font-size:13px; color:var(--muted)}
+  select,button,input{font-family:inherit}
+  select{
+    background:var(--panel2); color:var(--txt); border:1px solid var(--line);
+    border-radius:9px; padding:8px 12px; font-size:14px; cursor:pointer;
+  }
+  .btn{
+    background:var(--accent); color:#fff; border:none; border-radius:9px;
+    padding:9px 14px; font-size:14px; font-weight:600; cursor:pointer; transition:.15s;
+  }
+  .btn:hover{background:var(--accent2)}
+  .btn.ghost{background:transparent; border:1px solid var(--line); color:var(--muted)}
+  .btn.ghost:hover{color:var(--txt); border-color:var(--accent2)}
+  .btn:disabled{opacity:.5; cursor:default}
+  .wrap{display:grid; grid-template-columns:1fr 340px; gap:18px; padding:18px 20px; max-width:1280px; margin:0 auto}
+  @media(max-width:980px){ .wrap{grid-template-columns:1fr} }
+
+  .drop{
+    border:2px dashed var(--line); border-radius:14px; padding:18px; text-align:center;
+    color:var(--muted); background:var(--panel); cursor:pointer; transition:.15s; margin-bottom:16px;
+  }
+  .drop.hot{border-color:var(--accent2); color:var(--txt); background:var(--panel2)}
+  .drop b{color:var(--accent2)}
+
+  .toolbar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; align-items:center}
+
+  table{width:100%; border-collapse:separate; border-spacing:0 8px}
+  th{font-size:12px; color:var(--muted); text-align:right; padding:0 12px; font-weight:600}
+  tr.row td{background:var(--panel); padding:12px; vertical-align:middle; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  tr.row td:first-child{border-right:1px solid var(--line); border-radius:0 12px 12px 0}
+  tr.row td:last-child{border-left:1px solid var(--line); border-radius:12px 0 0 12px}
+  tr.row.attn td{background:#2a1620; box-shadow:inset 0 0 0 1px var(--attn)}
+  .room{font-weight:700; font-size:16px; white-space:nowrap}
+  .name{font-weight:600}
+  .meta{font-size:12px; color:var(--muted); margin-top:2px}
+  .note-in{
+    width:100%; background:var(--panel2); border:1px solid var(--line); color:var(--txt);
+    border-radius:8px; padding:7px 10px; font-size:13px;
+  }
+  .note-in:focus{outline:none; border-color:var(--accent2)}
+
+  .status{display:flex; gap:6px; flex-wrap:wrap}
+  .pill{
+    border:1px solid var(--line); background:transparent; color:var(--muted);
+    border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600; cursor:pointer; transition:.12s;
+  }
+  .pill:hover{border-color:var(--accent2); color:var(--txt)}
+  .pill.on.pending{background:var(--pending); color:#fff; border-color:var(--pending)}
+  .pill.on.prep{background:var(--prep); color:#fff; border-color:var(--prep)}
+  .pill.on.attn{background:var(--attn); color:#fff; border-color:var(--attn)}
+  .pill.on.done{background:var(--done); color:#fff; border-color:var(--done)}
+  .rm{color:var(--muted); background:none; border:none; cursor:pointer; font-size:18px; line-height:1}
+  .rm:hover{color:var(--attn)}
+
+  aside{position:sticky; top:78px; align-self:start}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px; box-shadow:var(--shadow)}
+  .card h3{margin:0 0 10px; font-size:14px; display:flex; align-items:center; gap:8px}
+  .dot{width:9px; height:9px; border-radius:50%; background:var(--done); box-shadow:0 0 0 4px rgba(22,163,74,.2)}
+  .dot.off{background:var(--pending); box-shadow:none}
+  .log{max-height:62vh; overflow:auto; display:flex; flex-direction:column; gap:8px}
+  .ev{font-size:13px; padding:9px 11px; background:var(--panel2); border-radius:9px; border-right:3px solid var(--line)}
+  .ev.urgent{border-right-color:var(--attn); background:#241624}
+  .ev .t{color:var(--muted); font-size:11px; margin-bottom:2px}
+
+  .toast{
+    position:fixed; bottom:22px; left:22px; background:var(--attn); color:#fff;
+    padding:13px 18px; border-radius:12px; box-shadow:var(--shadow); font-weight:600;
+    transform:translateY(140%); transition:.3s; z-index:100; max-width:340px;
+  }
+  .toast.show{transform:translateY(0)}
+  .banner{
+    display:none; margin:0 20px; padding:11px 14px; border-radius:10px; font-size:13px;
+    background:#3a2410; border:1px solid var(--prep); color:#fcd9a8;
+  }
+  .banner.show{display:block}
+  .empty{text-align:center; color:var(--muted); padding:40px; font-size:14px}
+  .spin{display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🏥 לוח שחרורים חי</h1>
+    <div class="sub">מחלקת יולדות · עדכון בזמן אמת</div>
+  </div>
+  <div class="grow"></div>
+  <div class="role-wrap">
+    <label>תפקיד:</label>
+    <select id="role">
+      <option value="מנהל">מנהל המחלקה</option>
+      <option value="אחות">אחות</option>
+      <option value="מתמחה">מתמחה</option>
+    </select>
+  </div>
+  <button class="btn ghost" id="notifBtn" title="הפעלת התרעות דפדפן">🔔 התרעות</button>
+</header>
+
+<div class="banner" id="banner"></div>
+
+<div class="wrap">
+  <main>
+    <div class="drop" id="drop">
+      📷 גרור לכאן צילום JPEG של רשימת השחרורים, או <b>לחץ לבחירה</b>
+      <input type="file" id="file" accept="image/*" hidden>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn" id="addBtn">➕ הוספה ידנית</button>
+      <button class="btn ghost" id="newdayBtn">🗓️ יום חדש</button>
+      <span class="grow"></span>
+      <span class="meta" id="syncInfo">—</span>
+    </div>
+
+    <table>
+      <thead><tr>
+        <th style="width:74px">חדר</th>
+        <th>מטופלת</th>
+        <th style="width:300px">סטטוס</th>
+        <th>הערה</th>
+        <th style="width:34px"></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty">אין מטופלות עדיין — העלה צילום של הרשימה כדי להתחיל.</div>
+  </main>
+
+  <aside>
+    <div class="card">
+      <h3><span class="dot" id="liveDot"></span> התרעות ופעילות</h3>
+      <div class="log" id="log"></div>
+    </div>
+  </aside>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbw58XPl_FVQtX_0WwPhh9jVygaaOir-Jig2IvdtxXGhchlobkCwOxAUj1Mm4EC3u8c-jg/exec";
+
+const POLL_MS = 15000;
+const $ = s => document.querySelector(s);
+const STATUSES = [
+  {k:'pending', label:'ממתין'},
+  {k:'prep',    label:'בהכנה'},
+  {k:'attn',    label:'דורש חתימה'},
+  {k:'done',    label:'חתום'},
+];
+
+let state = {patients:[], log:[]};
+let lastUrgentKey = null;
+let editingId = null;
+let booted = false;
+
+const roleSel = $('#role');
+roleSel.value = localStorage.getItem('role') || 'מנהל';
+roleSel.onchange = () => localStorage.setItem('role', roleSel.value);
+const who = () => roleSel.value;
+
+async function api(payload){
+  if(!ENDPOINT || ENDPOINT.indexOf('PASTE_') === 0){
+    showBanner('לא הוגדרה כתובת שרת (ENDPOINT) בקובץ.');
+    throw new Error('no endpoint');
+  }
+  const opt = payload
+    ? {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}
+    : {method:'GET'};
+  const res = await fetch(ENDPOINT, opt);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const data = await res.json();
+  if(data.error) throw new Error(data.error);
+  return data;
+}
+
+async function refresh(){
+  try{
+    const data = await api(null);
+    apply(data);
+    hideBanner();
+  }catch(e){
+    showBanner('אין חיבור לשרת כרגע — מנסה שוב. ('+e.message+')');
+    $('#liveDot').classList.add('off');
+  }
+}
+
+async function send(payload){
+  try{
+    const data = await api(payload);
+    apply(data);
+    hideBanner();
+  }catch(e){
+    showBanner('הפעולה לא נשמרה: '+e.message);
+  }
+}
+
+function apply(data){
+  state = data || {patients:[], log:[]};
+  $('#liveDot').classList.remove('off');
+  renderRows();
+  renderLog();
+  detectUrgent();
+  $('#syncInfo').textContent = 'עודכן ' + new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  booted = true;
+}
+
+function renderRows(){
+  const tb = $('#rows'); tb.innerHTML='';
+  const list = state.patients||[];
+  $('#empty').style.display = list.length ? 'none' : 'block';
+
+  list.forEach(p=>{
+    const tr = document.createElement('tr');
+    tr.className = 'row' + (p.status==='attn' ? ' attn' : '');
+
+    const pills = STATUSES.map(s=>
+      `<button class="pill ${s.k} ${p.status===s.k?'on':''}" data-act="status" data-id="${p.id}" data-v="${s.k}">${s.label}</button>`
+    ).join('');
+
+    tr.innerHTML = `
+      <td><span class="room">${esc(p.room)||'—'}</span></td>
+      <td>
+        <div class="name">${esc(p.name)||'—'}</div>
+        <div class="meta">${esc(p.diet)||''}${p.admissionDate?' · קבלה '+esc(p.admissionDate):''}${p.updatedBy?' · '+esc(p.updatedBy)+' '+esc(p.updatedAt):''}</div>
+      </td>
+      <td><div class="status">${pills}</div></td>
+      <td><input class="note-in" data-id="${p.id}" value="${esc(p.note)||''}" placeholder="הערה (במקום טלפון)…"></td>
+      <td><button class="rm" data-act="remove" data-id="${p.id}" title="הסרה">×</button></td>`;
+    tb.appendChild(tr);
+  });
+
+  tb.querySelectorAll('[data-act="status"]').forEach(b=>{
+    b.onclick = ()=> send({action:'update', id:b.dataset.id, status:b.dataset.v, by:who()});
+  });
+  tb.querySelectorAll('[data-act="remove"]').forEach(b=>{
+    b.onclick = ()=>{ if(confirm('להסיר מטופלת מהרשימה?')) send({action:'remove', id:b.dataset.id, by:who()}); };
+  });
+  tb.querySelectorAll('.note-in').forEach(inp=>{
+    inp.onfocus = ()=> editingId = inp.dataset.id;
+    inp.onblur  = ()=>{
+      editingId = null;
+      const orig = (state.patients.find(x=>x.id===inp.dataset.id)||{}).note || '';
+      if(inp.value !== orig) send({action:'update', id:inp.dataset.id, note:inp.value, by:who()});
+    };
+    inp.onkeydown = e=>{ if(e.key==='Enter') inp.blur(); };
+  });
+}
+
+function renderLog(){
+  const box = $('#log'); box.innerHTML='';
+  (state.log||[]).forEach(ev=>{
+    const d = document.createElement('div');
+    d.className = 'ev' + (ev.urgent?' urgent':'');
+    d.innerHTML = `<div class="t">${esc(ev.ts)}</div>${esc(ev.text)}`;
+    box.appendChild(d);
+  });
+  if(!(state.log||[]).length) box.innerHTML = '<div class="meta">אין פעילות עדיין.</div>';
+}
+
+function detectUrgent(){
+  const top = (state.log||[]).find(e=>e.urgent);
+  if(!top) return;
+  const key = top.ts + '|' + top.text;
+  if(lastUrgentKey === null){ lastUrgentKey = key; return; }
+  if(key !== lastUrgentKey){
+    lastUrgentKey = key;
+    toast('🔔 ' + top.text);
+    browserNotify(top.text);
+  }
+}
+
+const drop = $('#drop'), file = $('#file');
+drop.onclick = ()=> file.click();
+file.onchange = ()=> file.files[0] && handleImage(file.files[0]);
+['dragover','dragenter'].forEach(ev=> drop.addEventListener(ev, e=>{e.preventDefault(); drop.classList.add('hot');}));
+['dragleave','drop'].forEach(ev=> drop.addEventListener(ev, e=>{e.preventDefault(); drop.classList.remove('hot');}));
+drop.addEventListener('drop', e=>{ const f=e.dataTransfer.files[0]; if(f) handleImage(f); });
+
+async function handleImage(f){
+  drop.innerHTML = '<span class="spin"></span> קורא את הרשימה…';
+  try{
+    const r = await resize(f);
+    await send({action:'extract', image:r.b64, mediaType:r.mediaType});
+  }catch(e){
+    showBanner('קריאת התמונה נכשלה: '+e.message);
+  }finally{
+    drop.innerHTML = '📷 גרור לכאן צילום JPEG של רשימת השחרורים, או <b>לחץ לבחירה</b>';
+    file.value='';
+  }
+}
+
+function resize(f){
+  return new Promise((resolve,reject)=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const max=1500, sc=Math.min(1, max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      const url=c.toDataURL('image/jpeg',0.82);
+      resolve({b64:url.split(',')[1], mediaType:'image/jpeg'});
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(f);
+  });
+}
+
+$('#addBtn').onclick = ()=>{
+  const room = prompt('מספר חדר/מיטה (למשל 7/1):'); if(room===null) return;
+  const name = prompt('שם המטופלת:'); if(name===null) return;
+  send({action:'add', room:room.trim(), name:name.trim(), by:who()});
+};
+$('#newdayBtn').onclick = ()=>{
+  if(confirm('לפתוח יום חדש ולנקות את הלוח? פעולה זו אינה הפיכה.'))
+    send({action:'newday'});
+};
+
+$('#notifBtn').onclick = ()=>{
+  if(!('Notification' in window)) return showBanner('הדפדפן אינו תומך בהתרעות.');
+  Notification.requestPermission().then(p=>{
+    if(p==='granted') toast('✅ התרעות הופעלו');
+  });
+};
+function browserNotify(text){
+  if(('Notification' in window) && Notification.permission==='granted'){
+    try{ new Notification('לוח שחרורים', {body:text}); }catch(e){}
+  }
+}
+
+let toastT;
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'), 5000);
+}
+function showBanner(m){ const b=$('#banner'); b.textContent=m; b.classList.add('show'); }
+function hideBanner(){ $('#banner').classList.remove('show'); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>(({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])); }
+
+function tick(){ if(editingId===null) refresh(); }
+refresh();
+setInterval(tick, POLL_MS);
+</script>
+</body>
+</html>
