@@ -2,370 +2,457 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>לוח שחרורים חי — מחלקת יולדות</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>לוח בקשות — יולדות ב׳</title>
 <style>
   :root{
-    --bg:#0f1729; --panel:#16203a; --panel2:#1d2b4a; --line:#2a3a5e;
-    --txt:#e8eef9; --muted:#9bb0d3; --accent:#3b82f6; --accent2:#60a5fa;
-    --pending:#64748b; --prep:#d97706; --attn:#dc2626; --done:#16a34a;
-    --shadow:0 8px 28px rgba(0,0,0,.35);
+    --bg:#eef2f9; --card:#ffffff; --ink:#15233f; --ink2:#52617d; --line:#dde4f0;
+    --blue:#2563eb; --blue-d:#1d4ed8;
+    --new:#dc2626; --new-bg:#fdecec;
+    --prog:#d97706; --prog-bg:#fdf2e2;
+    --done:#16a34a; --done-bg:#e9f7ee;
+    --shadow:0 4px 16px rgba(20,40,80,.08);
   }
-  *{box-sizing:border-box}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
   body{
-    margin:0; background:linear-gradient(160deg,#0b1222,#0f1729 40%,#101a30);
-    color:var(--txt); font-family:"Segoe UI","Heebo",Arial,sans-serif; min-height:100vh;
+    background:var(--bg); color:var(--ink); font-size:17px; line-height:1.5;
+    font-family:"Segoe UI","Heebo","Assistant",Arial,sans-serif; padding-bottom:30px;
   }
-  header{
-    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
-    padding:14px 20px; background:rgba(13,20,38,.85); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50;
-  }
-  header h1{font-size:19px; margin:0; font-weight:700; letter-spacing:.2px}
-  header .sub{font-size:12px; color:var(--muted); margin-top:2px}
-  .grow{flex:1}
-  .role-wrap{display:flex; align-items:center; gap:8px}
-  .role-wrap label{font-size:13px; color:var(--muted)}
-  select,button,input{font-family:inherit}
-  select{
-    background:var(--panel2); color:var(--txt); border:1px solid var(--line);
-    border-radius:9px; padding:8px 12px; font-size:14px; cursor:pointer;
-  }
-  .btn{
-    background:var(--accent); color:#fff; border:none; border-radius:9px;
-    padding:9px 14px; font-size:14px; font-weight:600; cursor:pointer; transition:.15s;
-  }
-  .btn:hover{background:var(--accent2)}
-  .btn.ghost{background:transparent; border:1px solid var(--line); color:var(--muted)}
-  .btn.ghost:hover{color:var(--txt); border-color:var(--accent2)}
-  .btn:disabled{opacity:.5; cursor:default}
-  .wrap{display:grid; grid-template-columns:1fr 340px; gap:18px; padding:18px 20px; max-width:1280px; margin:0 auto}
-  @media(max-width:980px){ .wrap{grid-template-columns:1fr} }
+  button{font-family:inherit; cursor:pointer}
+  .hidden{display:none !important}
 
-  .drop{
-    border:2px dashed var(--line); border-radius:14px; padding:18px; text-align:center;
-    color:var(--muted); background:var(--panel); cursor:pointer; transition:.15s; margin-bottom:16px;
-  }
-  .drop.hot{border-color:var(--accent2); color:var(--txt); background:var(--panel2)}
-  .drop b{color:var(--accent2)}
+  /* ===== מסך כניסה ===== */
+  .gate{position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:var(--bg); padding:20px}
+  .gate .box{background:var(--card); border-radius:22px; padding:34px 28px; width:min(94vw,400px); box-shadow:var(--shadow); text-align:center}
+  .gate .logo{font-size:46px}
+  .gate h1{font-size:26px; margin:6px 0 4px}
+  .gate p{color:var(--ink2); margin:0 0 22px; font-size:17px}
+  .gate input{width:100%; border:2px solid var(--line); border-radius:14px; padding:16px; font-size:22px; text-align:center; margin-bottom:14px}
+  .gate input:focus{outline:none; border-color:var(--blue)}
+  .gate .err{color:var(--new); min-height:22px; font-size:15px}
 
-  .toolbar{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; align-items:center}
+  /* ===== כותרת ===== */
+  header{position:sticky; top:0; z-index:60; background:var(--card); border-bottom:1px solid var(--line); padding:12px 16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  header .title{font-size:21px; font-weight:700}
+  header .sub{font-size:13px; color:var(--ink2)}
+  .spacer{flex:1}
+  .role{display:flex; align-items:center; gap:7px; background:var(--bg); border-radius:12px; padding:6px 10px}
+  .role label{font-size:14px; color:var(--ink2)}
+  .role select{border:none; background:transparent; font-size:17px; font-weight:600; color:var(--ink)}
+  .icon-btn{border:1px solid var(--line); background:var(--card); border-radius:12px; padding:9px 12px; font-size:16px; color:var(--ink2)}
 
-  table{width:100%; border-collapse:separate; border-spacing:0 8px}
-  th{font-size:12px; color:var(--muted); text-align:right; padding:0 12px; font-weight:600}
-  tr.row td{background:var(--panel); padding:12px; vertical-align:middle; border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
-  tr.row td:first-child{border-right:1px solid var(--line); border-radius:0 12px 12px 0}
-  tr.row td:last-child{border-left:1px solid var(--line); border-radius:12px 0 0 12px}
-  tr.row.attn td{background:#2a1620; box-shadow:inset 0 0 0 1px var(--attn)}
-  .room{font-weight:700; font-size:16px; white-space:nowrap}
-  .name{font-weight:600}
-  .meta{font-size:12px; color:var(--muted); margin-top:2px}
-  .note-in{
-    width:100%; background:var(--panel2); border:1px solid var(--line); color:var(--txt);
-    border-radius:8px; padding:7px 10px; font-size:13px;
-  }
-  .note-in:focus{outline:none; border-color:var(--accent2)}
+  /* ===== טאבים ===== */
+  .tabs{display:flex; gap:8px; padding:12px 16px 0; max-width:920px; margin:0 auto}
+  .tab{flex:1; border:2px solid var(--line); background:var(--card); border-radius:14px 14px 0 0; padding:13px; font-size:18px; font-weight:700; color:var(--ink2); border-bottom:none}
+  .tab.on{color:var(--blue); border-color:var(--blue); background:#f5f8ff}
 
-  .status{display:flex; gap:6px; flex-wrap:wrap}
-  .pill{
-    border:1px solid var(--line); background:transparent; color:var(--muted);
-    border-radius:999px; padding:5px 11px; font-size:12px; font-weight:600; cursor:pointer; transition:.12s;
-  }
-  .pill:hover{border-color:var(--accent2); color:var(--txt)}
-  .pill.on.pending{background:var(--pending); color:#fff; border-color:var(--pending)}
-  .pill.on.prep{background:var(--prep); color:#fff; border-color:var(--prep)}
-  .pill.on.attn{background:var(--attn); color:#fff; border-color:var(--attn)}
-  .pill.on.done{background:var(--done); color:#fff; border-color:var(--done)}
-  .rm{color:var(--muted); background:none; border:none; cursor:pointer; font-size:18px; line-height:1}
-  .rm:hover{color:var(--attn)}
+  main{max-width:920px; margin:0 auto; padding:14px 16px}
 
-  aside{position:sticky; top:78px; align-self:start}
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px; box-shadow:var(--shadow)}
-  .card h3{margin:0 0 10px; font-size:14px; display:flex; align-items:center; gap:8px}
-  .dot{width:9px; height:9px; border-radius:50%; background:var(--done); box-shadow:0 0 0 4px rgba(22,163,74,.2)}
-  .dot.off{background:var(--pending); box-shadow:none}
-  .log{max-height:62vh; overflow:auto; display:flex; flex-direction:column; gap:8px}
-  .ev{font-size:13px; padding:9px 11px; background:var(--panel2); border-radius:9px; border-right:3px solid var(--line)}
-  .ev.urgent{border-right-color:var(--attn); background:#241624}
-  .ev .t{color:var(--muted); font-size:11px; margin-bottom:2px}
+  .big-btn{width:100%; border:none; border-radius:16px; background:var(--blue); color:#fff; font-size:21px; font-weight:700; padding:18px; box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; gap:10px}
+  .big-btn:active{background:var(--blue-d)}
+  .big-btn.green{background:var(--done)} .big-btn.green:active{background:#128a3e}
 
-  .toast{
-    position:fixed; bottom:22px; left:22px; background:var(--attn); color:#fff;
-    padding:13px 18px; border-radius:12px; box-shadow:var(--shadow); font-weight:600;
-    transform:translateY(140%); transition:.3s; z-index:100; max-width:340px;
-  }
-  .toast.show{transform:translateY(0)}
-  .banner{
-    display:none; margin:0 20px; padding:11px 14px; border-radius:10px; font-size:13px;
-    background:#3a2410; border:1px solid var(--prep); color:#fcd9a8;
-  }
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin:16px 0}
+  .chip{border:2px solid var(--line); background:var(--card); border-radius:999px; padding:9px 15px; font-size:16px; font-weight:600; color:var(--ink2)}
+  .chip.on{background:var(--ink); color:#fff; border-color:var(--ink)}
+
+  /* ===== כרטיס בקשה ===== */
+  .req{background:var(--card); border-radius:16px; box-shadow:var(--shadow); margin-bottom:14px; overflow:hidden; border-right:8px solid var(--line)}
+  .req.s-new{border-right-color:var(--new)}
+  .req.s-progress{border-right-color:var(--prog)}
+  .req.s-done{border-right-color:var(--done); opacity:.75}
+  .req .body{padding:15px 17px}
+  .req .top{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .room-badge{background:var(--ink); color:#fff; border-radius:12px; font-weight:800; font-size:22px; padding:6px 13px; min-width:54px; text-align:center}
+  .req .who{font-size:19px; font-weight:700}
+  .req .type{display:flex; align-items:center; gap:8px; font-size:19px; font-weight:700; margin-top:11px}
+  .req .type .em{font-size:26px}
+  .req .detail{font-size:17px; color:var(--ink2); margin-top:8px; background:var(--bg); border-radius:10px; padding:10px 12px}
+  .badge-urgent{background:var(--new-bg); color:var(--new); border-radius:999px; padding:5px 12px; font-size:15px; font-weight:800}
+  .statusline{display:flex; align-items:center; gap:8px; font-size:15px; color:var(--ink2); margin-top:11px}
+  .pill{border-radius:999px; padding:4px 12px; font-size:15px; font-weight:800}
+  .pill.s-new{background:var(--new-bg); color:var(--new)}
+  .pill.s-progress{background:var(--prog-bg); color:var(--prog)}
+  .pill.s-done{background:var(--done-bg); color:var(--done)}
+  .acts{display:flex; gap:10px; padding:0 17px 16px; flex-wrap:wrap}
+  .act{flex:1; min-width:130px; border:none; border-radius:13px; padding:15px; font-size:18px; font-weight:700; color:#fff}
+  .act.take{background:var(--prog)} .act.done{background:var(--done)} .act.reopen{background:#64748b; flex:0 0 auto; min-width:auto; padding:15px 18px}
+  .act.cancel{background:#fff; color:var(--new); border:2px solid var(--new-bg)}
+
+  .empty{text-align:center; color:var(--ink2); padding:46px 20px; font-size:18px; background:var(--card); border-radius:16px; box-shadow:var(--shadow)}
+  .empty .em{font-size:46px; display:block; margin-bottom:8px}
+
+  /* ===== מטופלות ===== */
+  .drop{border:2px dashed var(--line); border-radius:16px; padding:22px; text-align:center; color:var(--ink2); background:var(--card); font-size:17px; margin-bottom:14px}
+  .drop b{color:var(--blue)}
+  .pat{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:13px 15px; margin-bottom:11px}
+  .pat .head{display:flex; align-items:center; gap:11px}
+  .pat .meta{font-size:14px; color:var(--ink2); margin-top:3px}
+  .dschips{display:flex; gap:8px; flex-wrap:wrap; margin-top:11px}
+  .ds{border:2px solid var(--line); background:#fff; border-radius:12px; padding:10px 13px; font-size:15px; font-weight:700; color:var(--ink2); flex:1; min-width:120px}
+  .ds.on.unsigned{background:var(--new); color:#fff; border-color:var(--new)}
+  .ds.on.intern{background:var(--prog); color:#fff; border-color:var(--prog)}
+  .ds.on.ready{background:var(--done); color:#fff; border-color:var(--done)}
+
+  /* ===== חלון בקשה חדשה ===== */
+  .overlay{position:fixed; inset:0; z-index:200; background:rgba(15,25,45,.45); display:flex; align-items:flex-end; justify-content:center}
+  .sheet{background:var(--bg); width:100%; max-width:560px; max-height:94vh; overflow:auto; border-radius:22px 22px 0 0; padding:18px 18px 26px}
+  .sheet h2{font-size:22px; margin:4px 0 2px}
+  .sheet .step{font-size:18px; font-weight:800; margin:20px 0 10px}
+  .sheet .step small{color:var(--ink2); font-weight:600; font-size:14px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px}
+  .opt{border:2px solid var(--line); background:#fff; border-radius:14px; padding:14px 10px; text-align:center; font-size:16px; font-weight:700; color:var(--ink)}
+  .opt .em{font-size:30px; display:block; margin-bottom:5px}
+  .opt.on{border-color:var(--blue); background:#eef4ff; box-shadow:0 0 0 3px #dce8ff}
+  .urg{display:flex; gap:10px}
+  .urg .opt{flex:1}
+  .urg .opt.on.urgent{border-color:var(--new); background:var(--new-bg); box-shadow:0 0 0 3px #fbd9d9; color:var(--new)}
+  textarea{width:100%; border:2px solid var(--line); border-radius:14px; padding:13px; font-size:17px; font-family:inherit; min-height:74px; resize:vertical}
+  textarea:focus{outline:none; border-color:var(--blue)}
+  .text-in{width:100%; border:2px solid var(--line); border-radius:13px; padding:13px; font-size:18px; margin-top:8px}
+  .text-in:focus{outline:none; border-color:var(--blue)}
+  .sheet-acts{display:flex; gap:10px; margin-top:24px; position:sticky; bottom:0; background:var(--bg); padding-top:8px}
+  .sheet-acts .big-btn{flex:1}
+  .ghost{background:#fff; color:var(--ink2); border:2px solid var(--line); box-shadow:none}
+
+  .toast{position:fixed; bottom:18px; left:50%; transform:translate(-50%,160%); background:var(--ink); color:#fff; padding:14px 22px; border-radius:14px; font-size:17px; font-weight:600; z-index:400; transition:.3s; max-width:90vw; text-align:center}
+  .toast.show{transform:translate(-50%,0)}
+  .banner{display:none; background:var(--prog-bg); color:#7c4a06; border:1px solid var(--prog); border-radius:12px; padding:11px 14px; font-size:15px; margin-bottom:12px}
   .banner.show{display:block}
-  .empty{text-align:center; color:var(--muted); padding:40px; font-size:14px}
-  .spin{display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px}
+  .spin{display:inline-block; width:18px; height:18px; border:3px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; vertical-align:-3px}
   @keyframes sp{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <h1>🏥 לוח שחרורים חי</h1>
-    <div class="sub">מחלקת יולדות · עדכון בזמן אמת</div>
+<!-- ===== מסך כניסה ===== -->
+<div class="gate" id="gate">
+  <div class="box">
+    <div class="logo">🏥</div>
+    <h1>לוח בקשות</h1>
+    <p>מחלקת יולדות ב׳</p>
+    <input type="password" id="codeIn" placeholder="קוד כניסה" inputmode="text" autocomplete="off">
+    <button class="big-btn" id="enterBtn">כניסה</button>
+    <div class="err" id="gateErr"></div>
   </div>
-  <div class="grow"></div>
-  <div class="role-wrap">
-    <label>תפקיד:</label>
-    <select id="role">
-      <option value="מנהל">מנהל המחלקה</option>
-      <option value="אחות">אחות</option>
-      <option value="מתמחה">מתמחה</option>
-    </select>
+</div>
+
+<!-- ===== אפליקציה ===== -->
+<div id="app" class="hidden">
+  <header>
+    <div>
+      <div class="title">🏥 לוח בקשות</div>
+      <div class="sub">יולדות ב׳ · בזמן אמת <span id="syncInfo"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="role">
+      <label>אני:</label>
+      <select id="role">
+        <option value="אחות">אחות</option>
+        <option value="מתמחה">מתמחה</option>
+        <option value="מומחה">רופא/ה בכיר/ה</option>
+      </select>
+    </div>
+    <button class="icon-btn" id="lockBtn" title="יציאה">🔒</button>
+  </header>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="requests" id="tabReq">🔔 בקשות</button>
+    <button class="tab" data-tab="patients" id="tabPat">🛏️ מטופלות</button>
   </div>
-  <button class="btn ghost" id="notifBtn" title="הפעלת התרעות דפדפן">🔔 התרעות</button>
-</header>
 
-<div class="banner" id="banner"></div>
-
-<div class="wrap">
-  <main>
-    <div class="drop" id="drop">
-      📷 גרור לכאן צילום JPEG של רשימת השחרורים, או <b>לחץ לבחירה</b>
-      <input type="file" id="file" accept="image/*" hidden>
+  <!-- מסך בקשות -->
+  <main id="screenRequests">
+    <div class="banner" id="banner"></div>
+    <button class="big-btn" id="newReqBtn">➕ בקשה חדשה</button>
+    <div class="chips" id="filters">
+      <button class="chip on" data-f="open">פתוחות</button>
+      <button class="chip" data-f="urgent">🔴 דחופות</button>
+      <button class="chip" data-f="mine">שלי</button>
+      <button class="chip" data-f="done">✓ בוצעו</button>
     </div>
-
-    <div class="toolbar">
-      <button class="btn" id="addBtn">➕ הוספה ידנית</button>
-      <button class="btn ghost" id="newdayBtn">🗓️ יום חדש</button>
-      <span class="grow"></span>
-      <span class="meta" id="syncInfo">—</span>
-    </div>
-
-    <table>
-      <thead><tr>
-        <th style="width:74px">חדר</th>
-        <th>מטופלת</th>
-        <th style="width:300px">סטטוס</th>
-        <th>הערה</th>
-        <th style="width:34px"></th>
-      </tr></thead>
-      <tbody id="rows"></tbody>
-    </table>
-    <div class="empty" id="empty">אין מטופלות עדיין — העלה צילום של הרשימה כדי להתחיל.</div>
+    <div id="reqList"></div>
   </main>
 
-  <aside>
-    <div class="card">
-      <h3><span class="dot" id="liveDot"></span> התרעות ופעילות</h3>
-      <div class="log" id="log"></div>
+  <!-- מסך מטופלות -->
+  <main id="screenPatients" class="hidden">
+    <div class="drop" id="drop">
+      📷 צלם/י או העלה/י את <b>דוח התזונה</b> של המחלקה<br>
+      <span style="font-size:14px">המערכת תקרא את החדרים והשמות אוטומטית · ת"ז לא נשמרת</span>
+      <input type="file" id="file" accept="image/*" capture="environment" hidden>
     </div>
-  </aside>
+    <button class="big-btn ghost" id="addPatBtn" style="margin-bottom:14px">➕ הוספת מטופלת ידנית</button>
+    <div id="patList"></div>
+  </main>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
+/* ============ הגדרות ============ */
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbw58XPl_FVQtX_0WwPhh9jVygaaOir-Jig2IvdtxXGhchlobkCwOxAUj1Mm4EC3u8c-jg/exec";
-
-const POLL_MS = 15000;
+const POLL_MS = 12000;
 const $ = s => document.querySelector(s);
-const STATUSES = [
-  {k:'pending', label:'ממתין'},
-  {k:'prep',    label:'בהכנה'},
-  {k:'attn',    label:'דורש חתימה'},
-  {k:'done',    label:'חתום'},
+
+const TYPES = [
+  {label:'רישום תרופה',  em:'💊'},
+  {label:'בדיקת יולדת',  em:'🩺'},
+  {label:'בדיקת מעבדה',  em:'🧪'},
+  {label:'צילום / הדמיה', em:'🩻'},
+  {label:'ביטול תרופה',  em:'⛔'},
+  {label:'חתימת שחרור',  em:'📝'},
+  {label:'אחר',          em:'📌'},
+];
+const typeEm = l => (TYPES.find(t=>t.label===l)||{em:'📌'}).em;
+
+const DISCHARGE = [
+  {k:'unsigned', label:'לא חתומה'},
+  {k:'intern',   label:'חתומה מתמחה'},
+  {k:'ready',    label:'מוכנה לשחרור'},
 ];
 
-let state = {patients:[], log:[]};
-let lastUrgentKey = null;
-let editingId = null;
-let booted = false;
+const STATUS_HE = {new:'ממתין', progress:'בטיפול', done:'בוצע'};
 
+let state = {patients:[], requests:[], log:[]};
+let CODE = '';
+let curTab = 'requests';
+let curFilter = 'open';
+let editingPat = false;   // השהיית רענון בזמן עריכה
+
+/* ============ תפקיד ============ */
 const roleSel = $('#role');
-roleSel.value = localStorage.getItem('role') || 'מנהל';
-roleSel.onchange = () => localStorage.setItem('role', roleSel.value);
-const who = () => roleSel.value;
+roleSel.value = localStorage.getItem('role') || 'אחות';
+roleSel.onchange = ()=>{ localStorage.setItem('role', roleSel.value); render(); };
+const who = ()=> roleSel.value;
 
+/* ============ מסך כניסה ============ */
+function showGate(msg){ $('#gate').classList.remove('hidden'); $('#app').classList.add('hidden'); $('#gateErr').textContent=msg||''; $('#codeIn').value=''; $('#codeIn').focus(); }
+function enterApp(){ $('#gate').classList.add('hidden'); $('#app').classList.remove('hidden'); }
+async function tryEnter(){
+  const code = $('#codeIn').value.trim();
+  if(!code){ $('#gateErr').textContent='נא להזין קוד.'; return; }
+  $('#gateErr').textContent='בודק…'; CODE=code;
+  try{ await api(null); localStorage.setItem('code',code); enterApp(); render(); startPolling(); }
+  catch(e){ CODE=''; $('#gateErr').textContent = e.message==='bad_code' ? 'קוד שגוי, נסה/י שוב.' : ('שגיאה: '+e.message); }
+}
+$('#enterBtn').onclick = tryEnter;
+$('#codeIn').onkeydown = e=>{ if(e.key==='Enter') tryEnter(); };
+$('#lockBtn').onclick = ()=>{ localStorage.removeItem('code'); CODE=''; showGate(''); };
+
+/* ============ API ============ */
 async function api(payload){
-  if(!ENDPOINT || ENDPOINT.indexOf('PASTE_') === 0){
-    showBanner('לא הוגדרה כתובת שרת (ENDPOINT) בקובץ.');
-    throw new Error('no endpoint');
-  }
-  const opt = payload
-    ? {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}
-    : {method:'GET'};
-  const res = await fetch(ENDPOINT, opt);
+  let url=ENDPOINT, opt;
+  if(payload){ payload.code=CODE; opt={method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}; }
+  else { url=ENDPOINT+'?code='+encodeURIComponent(CODE); opt={method:'GET'}; }
+  const res = await fetch(url,opt);
   if(!res.ok) throw new Error('HTTP '+res.status);
   const data = await res.json();
   if(data.error) throw new Error(data.error);
-  return data;
+  state = data; return data;
 }
-
 async function refresh(){
-  try{
-    const data = await api(null);
-    apply(data);
-    hideBanner();
-  }catch(e){
-    showBanner('אין חיבור לשרת כרגע — מנסה שוב. ('+e.message+')');
-    $('#liveDot').classList.add('off');
-  }
+  try{ await api(null); render(); hideBanner(); }
+  catch(e){ if(e.message==='bad_code'){ showGate('הקוד אינו בתוקף — היכנס/י שוב.'); return; } showBanner('אין חיבור כרגע — מנסה שוב…'); }
+}
+async function send(payload, okMsg){
+  try{ await api(payload); render(); hideBanner(); if(okMsg) toast(okMsg); }
+  catch(e){ if(e.message==='bad_code'){ showGate('הקוד אינו בתוקף — היכנס/י שוב.'); return; } showBanner('הפעולה לא נשמרה: '+e.message); }
 }
 
-async function send(payload){
-  try{
-    const data = await api(payload);
-    apply(data);
-    hideBanner();
-  }catch(e){
-    showBanner('הפעולה לא נשמרה: '+e.message);
-  }
+/* ============ טאבים ============ */
+document.querySelectorAll('.tab').forEach(t=> t.onclick = ()=>{
+  curTab = t.dataset.tab;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x===t));
+  $('#screenRequests').classList.toggle('hidden', curTab!=='requests');
+  $('#screenPatients').classList.toggle('hidden', curTab!=='patients');
+});
+
+/* ============ פילטרים ============ */
+document.querySelectorAll('#filters .chip').forEach(c=> c.onclick = ()=>{
+  curFilter = c.dataset.f;
+  document.querySelectorAll('#filters .chip').forEach(x=>x.classList.toggle('on', x===c));
+  renderRequests();
+});
+
+/* ============ רינדור ============ */
+function render(){ renderRequests(); renderPatients(); $('#syncInfo').textContent = '· '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
+
+function ago(ms){
+  if(!ms) return '';
+  const m = Math.floor((Date.now()-ms)/60000);
+  if(m<1) return 'עכשיו';
+  if(m<60) return 'לפני '+m+' ד׳';
+  const h=Math.floor(m/60); return 'לפני '+h+' שע׳'+(m%60?' '+(m%60)+' ד׳':'');
 }
 
-function apply(data){
-  state = data || {patients:[], log:[]};
-  $('#liveDot').classList.remove('off');
-  renderRows();
-  renderLog();
-  detectUrgent();
-  $('#syncInfo').textContent = 'עודכן ' + new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  booted = true;
-}
+function renderRequests(){
+  const box=$('#reqList'); box.innerHTML='';
+  let list=(state.requests||[]).slice();
+  // מיון: דחוף קודם, חדש לפני בטיפול, ישן קודם
+  const ord={new:0, progress:1, done:2};
+  list.sort((a,b)=> (ord[a.status]-ord[b.status]) || (b.priority==='urgent') - (a.priority==='urgent') || (a.createdAtMs-b.createdAtMs));
 
-function renderRows(){
-  const tb = $('#rows'); tb.innerHTML='';
-  const list = state.patients||[];
-  $('#empty').style.display = list.length ? 'none' : 'block';
+  if(curFilter==='open')   list=list.filter(r=>r.status!=='done');
+  if(curFilter==='urgent') list=list.filter(r=>r.priority==='urgent' && r.status!=='done');
+  if(curFilter==='mine')   list=list.filter(r=> (r.createdBy===who()||r.takenBy===who()) && r.status!=='done');
+  if(curFilter==='done')   list=list.filter(r=>r.status==='done');
 
-  list.forEach(p=>{
-    const tr = document.createElement('tr');
-    tr.className = 'row' + (p.status==='attn' ? ' attn' : '');
+  if(!list.length){ box.innerHTML='<div class="empty"><span class="em">✅</span>אין בקשות '+(curFilter==='done'?'שבוצעו':'פתוחות')+' כרגע</div>'; return; }
 
-    const pills = STATUSES.map(s=>
-      `<button class="pill ${s.k} ${p.status===s.k?'on':''}" data-act="status" data-id="${p.id}" data-v="${s.k}">${s.label}</button>`
-    ).join('');
+  list.forEach(r=>{
+    const d=document.createElement('div'); d.className='req s-'+r.status;
+    const urgent = r.priority==='urgent' && r.status!=='done';
+    let acts='';
+    if(r.status==='new')      acts = `<button class="act take" data-a="reqTake" data-id="${r.id}">🙋 אני מטפל/ת</button><button class="act done" data-a="reqDone" data-id="${r.id}">✓ בוצע</button><button class="act cancel" data-a="reqRemove" data-id="${r.id}">בטל</button>`;
+    else if(r.status==='progress') acts = `<button class="act done" data-a="reqDone" data-id="${r.id}">✓ בוצע</button><button class="act reopen" data-a="reqReopen" data-id="${r.id}">↩︎</button>`;
+    else acts = `<button class="act reopen" data-a="reqReopen" data-id="${r.id}">↩︎ החזר לפתוחות</button>`;
 
-    tr.innerHTML = `
-      <td><span class="room">${esc(p.room)||'—'}</span></td>
-      <td>
-        <div class="name">${esc(p.name)||'—'}</div>
-        <div class="meta">${esc(p.diet)||''}${p.admissionDate?' · קבלה '+esc(p.admissionDate):''}${p.updatedBy?' · '+esc(p.updatedBy)+' '+esc(p.updatedAt):''}</div>
-      </td>
-      <td><div class="status">${pills}</div></td>
-      <td><input class="note-in" data-id="${p.id}" value="${esc(p.note)||''}" placeholder="הערה (במקום טלפון)…"></td>
-      <td><button class="rm" data-act="remove" data-id="${p.id}" title="הסרה">×</button></td>`;
-    tb.appendChild(tr);
-  });
-
-  tb.querySelectorAll('[data-act="status"]').forEach(b=>{
-    b.onclick = ()=> send({action:'update', id:b.dataset.id, status:b.dataset.v, by:who()});
-  });
-  tb.querySelectorAll('[data-act="remove"]').forEach(b=>{
-    b.onclick = ()=>{ if(confirm('להסיר מטופלת מהרשימה?')) send({action:'remove', id:b.dataset.id, by:who()}); };
-  });
-  tb.querySelectorAll('.note-in').forEach(inp=>{
-    inp.onfocus = ()=> editingId = inp.dataset.id;
-    inp.onblur  = ()=>{
-      editingId = null;
-      const orig = (state.patients.find(x=>x.id===inp.dataset.id)||{}).note || '';
-      if(inp.value !== orig) send({action:'update', id:inp.dataset.id, note:inp.value, by:who()});
-    };
-    inp.onkeydown = e=>{ if(e.key==='Enter') inp.blur(); };
-  });
-}
-
-function renderLog(){
-  const box = $('#log'); box.innerHTML='';
-  (state.log||[]).forEach(ev=>{
-    const d = document.createElement('div');
-    d.className = 'ev' + (ev.urgent?' urgent':'');
-    d.innerHTML = `<div class="t">${esc(ev.ts)}</div>${esc(ev.text)}`;
+    d.innerHTML = `
+      <div class="body">
+        <div class="top">
+          <span class="room-badge">${esc(r.room)||'—'}</span>
+          <span class="who">${esc(r.name)||''}</span>
+          <span class="spacer"></span>
+          ${urgent?'<span class="badge-urgent">🔴 דחוף</span>':''}
+          <span class="pill s-${r.status}">${STATUS_HE[r.status]}</span>
+        </div>
+        <div class="type"><span class="em">${typeEm(r.type)}</span> ${esc(r.type)}</div>
+        ${r.detail?`<div class="detail">${esc(r.detail)}</div>`:''}
+        <div class="statusline">
+          ${r.createdBy?('ביקש/ה: '+esc(r.createdBy)):''} ${r.createdAtMs?('· '+ago(r.createdAtMs)):''}
+          ${r.takenBy?(' · מטפל/ת: '+esc(r.takenBy)):''}
+        </div>
+      </div>
+      <div class="acts">${acts}</div>`;
     box.appendChild(d);
   });
-  if(!(state.log||[]).length) box.innerHTML = '<div class="meta">אין פעילות עדיין.</div>';
+
+  box.querySelectorAll('[data-a]').forEach(b=> b.onclick = ()=>{
+    const a=b.dataset.a, id=b.dataset.id;
+    if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; send({action:'reqRemove', id, by:who()}); }
+    else { send({action:a, id, by:who()}, a==='reqDone'?'✓ סומן כבוצע':a==='reqTake'?'נלקח לטיפול':''); }
+  });
 }
 
-function detectUrgent(){
-  const top = (state.log||[]).find(e=>e.urgent);
-  if(!top) return;
-  const key = top.ts + '|' + top.text;
-  if(lastUrgentKey === null){ lastUrgentKey = key; return; }
-  if(key !== lastUrgentKey){
-    lastUrgentKey = key;
-    toast('🔔 ' + top.text);
-    browserNotify(top.text);
-  }
+function renderPatients(){
+  const box=$('#patList'); box.innerHTML='';
+  const list=(state.patients||[]).slice().sort((a,b)=> roomNum(a.room)-roomNum(b.room));
+  if(!list.length){ box.innerHTML='<div class="empty"><span class="em">🛏️</span>אין מטופלות עדיין — העלה/י את דוח התזונה למעלה</div>'; return; }
+  list.forEach(p=>{
+    const d=document.createElement('div'); d.className='pat';
+    const chips=DISCHARGE.map(s=>`<button class="ds ${s.k} ${p.discharge===s.k?'on':''}" data-id="${p.id}" data-v="${s.k}">${s.label}</button>`).join('');
+    d.innerHTML=`
+      <div class="head">
+        <span class="room-badge">${esc(p.room)||'—'}</span>
+        <div><div class="who">${esc(p.name)||'—'}</div>
+        <div class="meta">${esc(p.diet)||''}${p.admissionDate?' · קבלה '+esc(p.admissionDate):''}</div></div>
+        <span class="spacer"></span>
+        <button class="icon-btn" data-rm="${p.id}">🗑️</button>
+      </div>
+      <div class="dschips">${chips}</div>`;
+    box.appendChild(d);
+  });
+  box.querySelectorAll('.ds').forEach(b=> b.onclick=()=>{
+    const cur=(state.patients.find(x=>x.id===b.dataset.id)||{}).discharge;
+    const v = cur===b.dataset.v ? '' : b.dataset.v;   // לחיצה חוזרת מבטלת
+    send({action:'patDischarge', id:b.dataset.id, discharge:v, by:who()});
+  });
+  box.querySelectorAll('[data-rm]').forEach(b=> b.onclick=()=>{ if(confirm('להסיר מטופלת?')) send({action:'patRemove', id:b.dataset.rm, by:who()}); });
 }
+function roomNum(r){ const m=String(r||'').match(/\d+/); return m?+m[0]:999; }
 
-const drop = $('#drop'), file = $('#file');
-drop.onclick = ()=> file.click();
-file.onchange = ()=> file.files[0] && handleImage(file.files[0]);
-['dragover','dragenter'].forEach(ev=> drop.addEventListener(ev, e=>{e.preventDefault(); drop.classList.add('hot');}));
-['dragleave','drop'].forEach(ev=> drop.addEventListener(ev, e=>{e.preventDefault(); drop.classList.remove('hot');}));
-drop.addEventListener('drop', e=>{ const f=e.dataTransfer.files[0]; if(f) handleImage(f); });
+/* ============ בקשה חדשה ============ */
+let nrRoom=null, nrName='', nrType=null, nrUrgent=false;
+function openNewReq(){
+  nrRoom=null; nrName=''; nrType=null; nrUrgent=false;
+  const rooms=(state.patients||[]).slice().sort((a,b)=>roomNum(a.room)-roomNum(b.room));
+  const roomOpts = rooms.map(p=>`<button class="opt" data-room="${esc(p.room)}" data-name="${esc(p.name)}"><span class="em">${esc(p.room)}</span>${esc(p.name)||''}</button>`).join('')
+    + `<button class="opt" data-other="1"><span class="em">＋</span>חדר אחר</button>`;
+  const typeOpts = TYPES.map(t=>`<button class="opt" data-type="${t.label}"><span class="em">${t.em}</span>${t.label}</button>`).join('');
 
+  const ov=document.createElement('div'); ov.className='overlay'; ov.id='nrOverlay';
+  ov.innerHTML=`<div class="sheet">
+    <h2>➕ בקשה חדשה</h2>
+    <div class="step">1. באיזה חדר? <small>בחר/י מהרשימה</small></div>
+    <div class="grid" id="nrRooms">${roomOpts}</div>
+    <div id="nrOther" class="hidden"><input class="text-in" id="nrRoomIn" placeholder="מספר חדר (למשל 7/1)"><input class="text-in" id="nrNameIn" placeholder="שם המטופלת (לא חובה)"></div>
+    <div class="step">2. מה צריך מהרופא/ה?</div>
+    <div class="grid" id="nrTypes">${typeOpts}</div>
+    <div class="step">3. דחיפות</div>
+    <div class="urg"><button class="opt on" id="nrNormal">רגיל</button><button class="opt" id="nrUrgent">🔴 דחוף</button></div>
+    <div class="step">4. פרטים / הערה <small>לא חובה</small></div>
+    <textarea id="nrDetail" placeholder="לדוגמה: מתלוננת על כאב ראש ולחץ דם 150/95, נא להעריך"></textarea>
+    <div class="sheet-acts">
+      <button class="big-btn ghost" id="nrCancel">ביטול</button>
+      <button class="big-btn green" id="nrSend">שלח/י בקשה ✓</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.onclick = e=>{ if(e.target===ov) closeNewReq(); };
+
+  ov.querySelectorAll('[data-room]').forEach(b=> b.onclick=()=>{
+    ov.querySelectorAll('#nrRooms .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    $('#nrOther').classList.add('hidden'); nrRoom=b.dataset.room; nrName=b.dataset.name||'';
+  });
+  ov.querySelector('[data-other]').onclick = (e)=>{ // הכפתור האחרון
+    ov.querySelectorAll('#nrRooms .opt').forEach(x=>x.classList.remove('on')); e.currentTarget.classList.add('on');
+    $('#nrOther').classList.remove('hidden'); nrRoom=''; nrName='';
+  };
+  ov.querySelectorAll('[data-type]').forEach(b=> b.onclick=()=>{
+    ov.querySelectorAll('#nrTypes .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); nrType=b.dataset.type;
+  });
+  $('#nrNormal').onclick=()=>{ nrUrgent=false; $('#nrNormal').classList.add('on'); $('#nrUrgent').classList.remove('on'); };
+  $('#nrUrgent').onclick=()=>{ nrUrgent=true; $('#nrUrgent').classList.add('on'); $('#nrNormal').classList.remove('on'); };
+  $('#nrCancel').onclick=closeNewReq;
+  $('#nrSend').onclick=submitNewReq;
+}
+function closeNewReq(){ const o=$('#nrOverlay'); if(o) o.remove(); }
+function submitNewReq(){
+  let room=nrRoom, name=nrName;
+  if($('#nrOther') && !$('#nrOther').classList.contains('hidden')){ room=$('#nrRoomIn').value.trim(); name=$('#nrNameIn').value.trim(); }
+  if(room===null || room===undefined){ toast('בחר/י חדר'); return; }
+  if(!room){ toast('הקלד/י מספר חדר'); return; }
+  if(!nrType){ toast('בחר/י סוג בקשה'); return; }
+  const detail=$('#nrDetail').value.trim();
+  closeNewReq();
+  send({action:'reqAdd', room, name, type:nrType, detail, priority:nrUrgent?'urgent':'normal', by:who()}, '✓ הבקשה נשלחה');
+  curTab='requests'; document.querySelector('[data-tab="requests"]').click();
+}
+$('#newReqBtn').onclick = openNewReq;
+
+/* ============ העלאת תמונה ============ */
+const drop=$('#drop'), file=$('#file');
+drop.onclick=()=>file.click();
+file.onchange=()=> file.files[0] && handleImage(file.files[0]);
+['dragover','dragenter'].forEach(ev=> drop.addEventListener(ev,e=>{e.preventDefault();}));
+drop.addEventListener('drop', e=>{ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f) handleImage(f); });
 async function handleImage(f){
-  drop.innerHTML = '<span class="spin"></span> קורא את הרשימה…';
-  try{
-    const r = await resize(f);
-    await send({action:'extract', image:r.b64, mediaType:r.mediaType});
-  }catch(e){
-    showBanner('קריאת התמונה נכשלה: '+e.message);
-  }finally{
-    drop.innerHTML = '📷 גרור לכאן צילום JPEG של רשימת השחרורים, או <b>לחץ לבחירה</b>';
-    file.value='';
-  }
+  const orig=drop.innerHTML; drop.innerHTML='<span class="spin"></span> קורא את הרשימה…';
+  try{ const {b64,mediaType}=await resize(f); await send({action:'extract', image:b64, mediaType}, '✓ הרשימה נטענה'); }
+  catch(e){ showBanner('קריאת התמונה נכשלה: '+e.message); }
+  finally{ drop.innerHTML=orig; file.value=''; }
 }
+function resize(f){ return new Promise((res,rej)=>{ const img=new Image(); img.onload=()=>{ const max=1600, sc=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement('canvas'); c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc); c.getContext('2d').drawImage(img,0,0,c.width,c.height); const u=c.toDataURL('image/jpeg',0.85); res({b64:u.split(',')[1], mediaType:'image/jpeg'}); }; img.onerror=rej; img.src=URL.createObjectURL(f); }); }
 
-function resize(f){
-  return new Promise((resolve,reject)=>{
-    const img = new Image();
-    img.onload = ()=>{
-      const max=1500, sc=Math.min(1, max/Math.max(img.width,img.height));
-      const c=document.createElement('canvas');
-      c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc);
-      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-      const url=c.toDataURL('image/jpeg',0.82);
-      resolve({b64:url.split(',')[1], mediaType:'image/jpeg'});
-    };
-    img.onerror = reject;
-    img.src = URL.createObjectURL(f);
-  });
-}
+$('#addPatBtn').onclick=()=>{ const room=prompt('מספר חדר/מיטה:'); if(room===null) return; const name=prompt('שם המטופלת:'); if(name===null) return; send({action:'patAdd', room:room.trim(), name:name.trim(), by:who()}); };
 
-$('#addBtn').onclick = ()=>{
-  const room = prompt('מספר חדר/מיטה (למשל 7/1):'); if(room===null) return;
-  const name = prompt('שם המטופלת:'); if(name===null) return;
-  send({action:'add', room:room.trim(), name:name.trim(), by:who()});
-};
-$('#newdayBtn').onclick = ()=>{
-  if(confirm('לפתוח יום חדש ולנקות את הלוח? פעולה זו אינה הפיכה.'))
-    send({action:'newday'});
-};
-
-$('#notifBtn').onclick = ()=>{
-  if(!('Notification' in window)) return showBanner('הדפדפן אינו תומך בהתרעות.');
-  Notification.requestPermission().then(p=>{
-    if(p==='granted') toast('✅ התרעות הופעלו');
-  });
-};
-function browserNotify(text){
-  if(('Notification' in window) && Notification.permission==='granted'){
-    try{ new Notification('לוח שחרורים', {body:text}); }catch(e){}
-  }
-}
-
-let toastT;
-function toast(msg){
-  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'), 5000);
-}
+/* ============ טוסט / באנר ============ */
+let tT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tT); tT=setTimeout(()=>t.classList.remove('show'),3500); }
 function showBanner(m){ const b=$('#banner'); b.textContent=m; b.classList.add('show'); }
 function hideBanner(){ $('#banner').classList.remove('show'); }
-function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>(({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-function tick(){ if(editingId===null) refresh(); }
-refresh();
-setInterval(tick, POLL_MS);
+/* ============ רענון חי ============ */
+let pollTimer=null;
+function startPolling(){ if(!pollTimer) pollTimer=setInterval(()=>{ if(!$('#nrOverlay')) refresh(); }, POLL_MS); }
+
+/* ============ אתחול ============ */
+(function init(){
+  const saved=localStorage.getItem('code');
+  if(saved){ CODE=saved; api(null).then(()=>{ enterApp(); render(); startPolling(); }).catch(()=>{ CODE=''; localStorage.removeItem('code'); showGate(''); }); }
+  else showGate('');
+})();
 </script>
 </body>
 </html>
