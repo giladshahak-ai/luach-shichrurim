@@ -2,8 +2,8 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>לוח בקשות — יולדות ב׳</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>לוח מחלקה — יולדות ב׳</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,41 +12,23 @@
     --bg:#f5f5f7; --surface:#ffffff; --surface-2:#fbfbfd;
     --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#a1a1a6; --line:#e7e7ec; --line-2:#dededf;
     --accent:#0071e3; --accent-press:#0062c4;
-    --red:#ff3b30; --red-bg:#fff1f0;
-    --orange:#ff9500; --orange-bg:#fff6e9;
-    --green:#30a46c; --green-bg:#eaf7f0;
-    --r-card:20px; --r-ctl:13px;
+    --red:#ff3b30; --red-bg:#fdeceb; --red-tint:#fff6f5;
+    --orange:#ff9500; --orange-bg:#fef1df; --orange-tint:#fffaf2;
+    --green:#30a46c; --green-bg:#e7f6ee; --green-tint:#f4fbf7;
+    --r-card:18px; --r-ctl:12px;
     --sh-sm:0 1px 2px rgba(0,0,0,.05);
     --sh-md:0 6px 20px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
     --sh-lg:0 16px 40px rgba(0,0,0,.14);
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
   html,body{margin:0}
-  body{
-    background:var(--bg); color:var(--ink);
-    font-family:"Heebo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    font-size:16px; line-height:1.5; letter-spacing:-.01em; -webkit-font-smoothing:antialiased;
-    padding-bottom:40px;
-  }
+  body{background:var(--bg); color:var(--ink); font-family:"Heebo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:16px; line-height:1.5; letter-spacing:-.01em; -webkit-font-smoothing:antialiased; padding-bottom:40px}
   button{font-family:inherit; cursor:pointer; color:inherit}
   svg{display:block}
   .hidden{display:none !important}
   .ic{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex:none}
 
-  /* ===== כניסה ===== */
-  .gate{position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:var(--bg); padding:22px}
-  .gate .box{background:var(--surface); border:1px solid var(--line); border-radius:28px; padding:40px 32px; width:min(94vw,400px); box-shadow:var(--sh-md); text-align:center}
-  .gate .mark{width:60px; height:60px; border-radius:18px; margin:0 auto 18px; background:linear-gradient(160deg,#0a84ff,#0060c4); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(0,113,227,.35)}
-  .gate .mark svg{width:32px; height:32px; stroke:#fff; fill:none; stroke-width:1.8}
-  .gate h1{font-size:26px; font-weight:700; margin:0 0 4px; letter-spacing:-.02em}
-  .gate p{color:var(--ink2); margin:0 0 26px; font-size:16px}
-  .gate input{width:100%; border:1.5px solid var(--line-2); border-radius:14px; padding:15px; font-size:19px; text-align:center; background:var(--surface-2); transition:.15s}
-  .gate input:focus{outline:none; border-color:var(--accent); background:#fff; box-shadow:0 0 0 4px rgba(0,113,227,.12)}
-  .gate .err{color:var(--red); min-height:22px; font-size:14px; margin-top:12px}
-
-  /* ===== כותרת ===== */
-  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.72); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); padding:11px 20px; display:flex; align-items:center; gap:14px}
-  header .brand{display:flex; align-items:center; gap:11px}
+  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.78); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); padding:11px 18px; display:flex; align-items:center; gap:12px}
   header .logo{width:38px; height:38px; border-radius:11px; background:linear-gradient(160deg,#0a84ff,#0060c4); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,113,227,.3)}
   header .logo svg{width:21px; height:21px; stroke:#fff; fill:none; stroke-width:1.8}
   header .title{font-size:18px; font-weight:600; letter-spacing:-.02em; line-height:1.15}
@@ -55,185 +37,154 @@
   .role{display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--line); border-radius:11px; padding:7px 11px}
   .role label{font-size:13px; color:var(--ink2)}
   .role select{border:none; background:transparent; font-size:15px; font-weight:600; color:var(--ink); outline:none}
-  .ghost-btn{display:flex; align-items:center; justify-content:center; width:40px; height:40px; border:1px solid var(--line); background:var(--surface); border-radius:11px; color:var(--ink2); transition:.15s}
-  .ghost-btn:hover{background:var(--bg); color:var(--ink)}
 
-  /* ===== segmented tabs ===== */
-  .seg{display:flex; gap:4px; background:#e9e9ee; border-radius:13px; padding:4px; max-width:520px; margin:18px auto 0; width:calc(100% - 40px)}
-  .seg button{flex:1; border:none; background:transparent; border-radius:10px; padding:9px; font-size:15px; font-weight:600; color:var(--ink2); display:flex; align-items:center; justify-content:center; gap:7px; transition:.18s}
-  .seg button .ic{width:18px; height:18px}
-  .seg button.on{background:var(--surface); color:var(--ink); box-shadow:var(--sh-sm)}
+  main{max-width:920px; margin:0 auto; padding:16px}
+  .toolbar{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:14px; align-items:center}
+  .btn{border:1px solid var(--line-2); background:var(--surface); border-radius:12px; padding:11px 15px; font-size:15px; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:8px; transition:.15s; box-shadow:var(--sh-sm)}
+  .btn:active{transform:scale(.98)}
+  .btn .ic{width:19px; height:19px}
+  .btn.primary{background:var(--accent); color:#fff; border-color:transparent; box-shadow:0 4px 14px rgba(0,113,227,.26)}
+  .btn.ghost{background:transparent; box-shadow:none; color:var(--ink2)}
+  .grow{flex:1}
+  .synced{font-size:12px; color:var(--ink3)}
 
-  main{max-width:560px; margin:0 auto; padding:18px 20px}
+  .tablewrap{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-card); box-shadow:var(--sh-md); overflow:hidden}
+  .scroll{overflow-x:auto}
+  table{width:100%; border-collapse:collapse; font-size:14.5px; min-width:660px}
+  thead th{position:sticky; top:0; background:var(--surface-2); font-weight:600; color:var(--ink2); font-size:12.5px; padding:11px 6px; border-bottom:1px solid var(--line); text-align:center; line-height:1.25}
+  thead th.name{text-align:right; padding-inline-start:14px}
+  tbody td{padding:10px 6px; border-bottom:1px solid var(--line); text-align:center; vertical-align:middle}
+  tbody tr:last-child td{border-bottom:none}
+  td.room{font-weight:700; font-size:16px; width:46px}
+  td.name{text-align:right; padding-inline-start:14px; font-weight:600; font-size:15.5px}
+  td.name .diet{font-size:12px; color:var(--ink3); font-weight:400; margin-top:1px}
 
-  .primary{width:100%; border:none; border-radius:15px; background:var(--accent); color:#fff; font-size:17px; font-weight:600; padding:16px; display:flex; align-items:center; justify-content:center; gap:9px; box-shadow:0 6px 18px rgba(0,113,227,.28); transition:.15s; letter-spacing:-.01em}
-  .primary:active{background:var(--accent-press); transform:scale(.99)}
-  .primary .ic{width:20px; height:20px; stroke-width:2}
+  tr.r-unsigned td{background:var(--red-tint)}
+  tr.r-intern td{background:var(--orange-tint)}
+  tr.r-ready td{background:var(--green-tint)}
 
-  .chips{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 6px}
-  .chip{border:1px solid var(--line-2); background:var(--surface); border-radius:999px; padding:7px 14px; font-size:14px; font-weight:500; color:var(--ink2); transition:.15s}
-  .chip.on{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .chk{width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line-2); background:var(--surface); display:inline-flex; align-items:center; justify-content:center; color:var(--ink3); transition:.12s}
+  .chk .ic{width:18px; height:18px; stroke-width:2.4; opacity:0}
+  .chk.on .ic{opacity:1}
+  .chk.on.unsigned{background:var(--red); border-color:var(--red); color:#fff}
+  .chk.on.intern{background:var(--orange); border-color:var(--orange); color:#fff}
+  .chk.on.ready{background:var(--green); border-color:var(--green); color:#fff}
 
-  /* ===== כרטיס בקשה ===== */
-  .req{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-card); box-shadow:var(--sh-md); margin-top:14px; overflow:hidden}
-  .req::before{content:""; position:absolute; top:0; bottom:0; right:0; width:4px; background:var(--ink3)}
-  .req.s-new::before{background:var(--red)}
-  .req.s-progress::before{background:var(--orange)}
-  .req.s-done::before{background:var(--green)}
-  .req.s-done{opacity:.66}
-  .req .pad{padding:17px 20px 16px}
-  .req .top{display:flex; align-items:center; gap:13px}
-  .room{display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:56px; padding:7px 10px; background:var(--bg); border-radius:13px}
-  .room .lbl{font-size:10px; color:var(--ink3); font-weight:600; letter-spacing:.02em}
-  .room .num{font-size:21px; font-weight:700; letter-spacing:-.02em; line-height:1.05}
-  .who{font-size:18px; font-weight:600; letter-spacing:-.01em}
-  .type{display:flex; align-items:center; gap:9px; margin-top:13px; font-size:17px; font-weight:600; color:var(--ink)}
-  .type .tic{width:34px; height:34px; border-radius:10px; background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--accent)}
-  .type .tic .ic{width:20px; height:20px}
-  .detail{font-size:15.5px; color:var(--ink2); margin-top:11px; background:var(--surface-2); border:1px solid var(--line); border-radius:12px; padding:11px 13px; line-height:1.5}
-  .meta{display:flex; align-items:center; gap:7px; flex-wrap:wrap; font-size:13px; color:var(--ink3); margin-top:13px}
-  .pill{border-radius:999px; padding:4px 11px; font-size:12.5px; font-weight:600}
+  .reqbtn{border:none; background:transparent; padding:6px; display:inline-flex; align-items:center; justify-content:center; gap:5px; border-radius:10px; color:var(--ink3); font-weight:600; font-size:14px}
+  .reqbtn .badge{display:inline-flex; align-items:center; gap:4px; background:var(--bg-accent,#e6f1fb); color:var(--accent); border-radius:999px; padding:3px 9px; font-weight:600}
+  .reqbtn .badge.has{background:var(--accent); color:#fff}
+  .reqbtn .ic{width:18px; height:18px}
+  .rm{border:none; background:transparent; color:var(--ink3); padding:6px; border-radius:8px}
+  .rm:hover{color:var(--red)}
+
+  .detail td{background:var(--surface-2); padding:0; text-align:right}
+  .detail .inner{padding:13px 16px; display:flex; flex-direction:column; gap:9px}
+  .detail .dh{font-size:12.5px; color:var(--ink2); font-weight:600}
+  .reqcard{display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 12px}
+  .reqcard .tic{width:32px; height:32px; border-radius:9px; background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--accent); flex:none}
+  .reqcard .tic .ic{width:19px; height:19px}
+  .reqcard .body{flex:1; min-width:0}
+  .reqcard .ty{font-weight:600; font-size:15px}
+  .reqcard .de{font-size:13px; color:var(--ink2); margin-top:1px}
+  .reqcard .mt{font-size:11.5px; color:var(--ink3); margin-top:2px}
+  .pill{border-radius:999px; padding:3px 10px; font-size:12px; font-weight:600; white-space:nowrap}
   .pill.s-new{background:var(--red-bg); color:var(--red)}
   .pill.s-progress{background:var(--orange-bg); color:#b06900}
   .pill.s-done{background:var(--green-bg); color:var(--green)}
   .pill.urgent{background:var(--red); color:#fff}
-  .acts{display:flex; gap:9px; padding:0 20px 18px; flex-wrap:wrap}
-  .act{flex:1; min-width:120px; border:none; border-radius:12px; padding:13px; font-size:15.5px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:7px; transition:.15s}
-  .act .ic{width:18px; height:18px; stroke-width:2}
-  .act:active{transform:scale(.98)}
-  .act.take{background:var(--accent); color:#fff}
-  .act.done{background:var(--green); color:#fff}
-  .act.reopen{background:var(--bg); color:var(--ink2); flex:0 0 auto; min-width:auto; padding:13px 16px; border:1px solid var(--line-2)}
-  .act.cancel{background:transparent; color:var(--red); flex:0 0 auto; min-width:auto; padding:13px 16px}
+  .ract{display:flex; gap:7px; flex-wrap:wrap; margin-top:2px}
+  .mini{border:none; border-radius:9px; padding:8px 12px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:5px}
+  .mini .ic{width:15px; height:15px; stroke-width:2.4}
+  .mini.take{background:var(--accent); color:#fff}
+  .mini.done{background:var(--green); color:#fff}
+  .mini.reopen{background:var(--bg); color:var(--ink2); border:1px solid var(--line-2)}
+  .mini.cancel{background:transparent; color:var(--red)}
+  .addreq{align-self:flex-start; background:var(--surface); border:1px dashed var(--line-2); color:var(--accent); border-radius:11px; padding:10px 14px; font-weight:600; font-size:14px; display:inline-flex; align-items:center; gap:7px}
 
-  .empty{text-align:center; color:var(--ink2); padding:54px 24px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-card); box-shadow:var(--sh-md); margin-top:14px}
-  .empty .eic{width:52px; height:52px; border-radius:16px; background:var(--bg); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; color:var(--ink3)}
-  .empty .eic .ic{width:26px; height:26px}
-  .empty p{margin:0; font-size:16px}
+  .empty{text-align:center; color:var(--ink2); padding:50px 24px}
+  .empty .eic{width:50px; height:50px; border-radius:15px; background:var(--bg); display:flex; align-items:center; justify-content:center; margin:0 auto 13px; color:var(--ink3)}
 
-  /* ===== מטופלות ===== */
-  .drop{border:1.5px dashed var(--line-2); border-radius:var(--r-card); padding:26px 20px; text-align:center; color:var(--ink2); background:var(--surface); transition:.15s; margin-bottom:13px}
-  .drop:hover{border-color:var(--accent); background:#fbfdff}
-  .drop .dic{width:46px; height:46px; border-radius:14px; background:var(--bg); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:var(--accent)}
-  .drop .dic .ic{width:24px; height:24px}
-  .drop b{color:var(--ink); font-weight:600}
-  .drop .hint{font-size:13px; color:var(--ink3); margin-top:6px}
-  .secondary{width:100%; border:1px solid var(--line-2); background:var(--surface); border-radius:14px; padding:14px; font-size:16px; font-weight:600; color:var(--ink); display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:14px; transition:.15s}
-  .secondary:active{background:var(--bg)}
-  .pat{background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:var(--sh-md); padding:15px 17px; margin-top:12px}
-  .pat .head{display:flex; align-items:center; gap:12px}
-  .pat .info{flex:1}
-  .pat .submeta{font-size:13px; color:var(--ink3); margin-top:2px}
-  .ds-row{display:flex; gap:7px; flex-wrap:wrap; margin-top:13px}
-  .ds{flex:1; min-width:100px; border:1px solid var(--line-2); background:var(--surface); border-radius:11px; padding:10px; font-size:13.5px; font-weight:600; color:var(--ink2); transition:.15s}
-  .ds.on.unsigned{background:var(--red); color:#fff; border-color:var(--red)}
-  .ds.on.intern{background:var(--orange); color:#fff; border-color:var(--orange)}
-  .ds.on.ready{background:var(--green); color:#fff; border-color:var(--green)}
-
-  /* ===== sheet בקשה חדשה ===== */
   .overlay{position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.32); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:fade .2s ease}
   @keyframes fade{from{opacity:0}to{opacity:1}}
-  .sheet{background:var(--bg); width:100%; max-width:560px; max-height:94vh; overflow:auto; border-radius:26px 26px 0 0; padding:10px 22px 28px; box-shadow:var(--sh-lg); animation:rise .28s cubic-bezier(.2,.8,.2,1)}
+  .sheet{background:var(--bg); width:100%; max-width:560px; max-height:94vh; overflow:auto; border-radius:24px 24px 0 0; padding:10px 20px 26px; box-shadow:var(--sh-lg); animation:rise .28s cubic-bezier(.2,.8,.2,1)}
   @keyframes rise{from{transform:translateY(40px)}to{transform:translateY(0)}}
-  .grab{width:38px; height:5px; border-radius:3px; background:var(--line-2); margin:8px auto 14px}
-  .sheet h2{font-size:23px; font-weight:700; margin:0 0 4px; letter-spacing:-.02em}
-  .step{font-size:13px; font-weight:600; color:var(--ink3); text-transform:none; letter-spacing:.02em; margin:22px 0 11px}
+  .grab{width:38px; height:5px; border-radius:3px; background:var(--line-2); margin:8px auto 12px}
+  .sheet h2{font-size:22px; font-weight:700; margin:0 0 2px; letter-spacing:-.02em}
+  .sheet .for{font-size:14px; color:var(--ink2); margin-bottom:6px}
+  .step{font-size:13px; font-weight:600; color:var(--ink3); margin:20px 0 10px}
   .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px}
-  .opt{display:flex; align-items:center; gap:11px; border:1.5px solid var(--line-2); background:var(--surface); border-radius:14px; padding:13px 14px; font-size:15.5px; font-weight:600; color:var(--ink); transition:.15s; text-align:right}
-  .opt .oic{width:38px; height:38px; border-radius:11px; background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--accent); flex:none}
-  .opt .oic .ic{width:21px; height:21px}
+  .opt{display:flex; align-items:center; gap:11px; border:1.5px solid var(--line-2); background:var(--surface); border-radius:14px; padding:13px 14px; font-size:15px; font-weight:600; color:var(--ink); transition:.15s; text-align:right}
+  .opt .oic{width:36px; height:36px; border-radius:10px; background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--accent); flex:none}
+  .opt .oic .ic{width:20px; height:20px}
   .opt.on{border-color:var(--accent); background:#f3f8ff; box-shadow:0 0 0 3px rgba(0,113,227,.12)}
-  .opt.room-opt{flex-direction:column; gap:3px; text-align:center; padding:14px 8px}
-  .opt.room-opt .rnum{font-size:20px; font-weight:700; letter-spacing:-.02em}
-  .opt.room-opt .rname{font-size:13px; color:var(--ink2); font-weight:500}
   .urg{display:flex; gap:10px}
   .urg .opt{flex:1; justify-content:center}
   .urg .opt.on.urgent{border-color:var(--red); background:var(--red-bg); box-shadow:0 0 0 3px rgba(255,59,48,.12); color:var(--red)}
   textarea,.text-in{width:100%; border:1.5px solid var(--line-2); border-radius:14px; padding:13px 15px; font-size:16px; font-family:inherit; background:var(--surface); transition:.15s}
-  textarea{min-height:80px; resize:vertical}
+  textarea{min-height:74px; resize:vertical}
   textarea:focus,.text-in:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 4px rgba(0,113,227,.1)}
   .text-in{margin-top:9px}
-  .sheet-acts{display:flex; gap:10px; margin-top:26px; position:sticky; bottom:0; background:linear-gradient(transparent,var(--bg) 22%); padding:14px 0 4px}
-  .sheet-acts .primary{flex:1.6}
-  .sheet-acts .secondary{flex:1; margin:0}
+  .sheet-acts{display:flex; gap:10px; margin-top:24px; position:sticky; bottom:0; background:linear-gradient(transparent,var(--bg) 24%); padding:14px 0 4px}
+  .sheet-acts .btn{flex:1; justify-content:center; padding:15px}
 
-  .toast{position:fixed; bottom:26px; left:50%; transform:translate(-50%,180%); background:rgba(29,29,31,.94); backdrop-filter:blur(10px); color:#fff; padding:14px 24px; border-radius:16px; font-size:15.5px; font-weight:600; z-index:400; transition:transform .35s cubic-bezier(.2,.9,.2,1); box-shadow:var(--sh-lg); max-width:90vw; text-align:center}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translate(-50%,180%); background:rgba(29,29,31,.94); backdrop-filter:blur(10px); color:#fff; padding:13px 22px; border-radius:14px; font-size:15px; font-weight:600; z-index:400; transition:transform .35s cubic-bezier(.2,.9,.2,1); box-shadow:var(--sh-lg); max-width:90vw; text-align:center}
   .toast.show{transform:translate(-50%,0)}
-  .banner{display:none; background:var(--orange-bg); color:#8a5200; border:1px solid #ffe2b3; border-radius:14px; padding:12px 15px; font-size:14px; margin-bottom:13px}
+  .banner{display:none; background:var(--orange-bg); color:#8a5200; border:1px solid #ffe2b3; border-radius:13px; padding:11px 14px; font-size:14px; margin-bottom:13px}
   .banner.show{display:block}
-  .spin{width:20px; height:20px; border:2.5px solid rgba(0,0,0,.12); border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite; margin:0 auto}
+  .spin{width:20px; height:20px; border:2.5px solid rgba(0,0,0,.12); border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- ===== כניסה ===== -->
-<div class="gate" id="gate">
-  <div class="box">
-    <div class="mark"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke-width="2.4"/></svg></div>
-    <h1>לוח בקשות</h1>
-    <p>מחלקת יולדות ב׳</p>
-    <input type="password" id="codeIn" placeholder="קוד כניסה" inputmode="text" autocomplete="off">
-    <button class="primary" id="enterBtn" style="margin-top:14px">כניסה</button>
-    <div class="err" id="gateErr"></div>
+<header>
+  <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke-width="2.2"/></svg></div>
+  <div>
+    <div class="title">לוח מחלקה</div>
+    <div class="sub">יולדות ב׳ · בזמן אמת <span id="syncInfo"></span></div>
   </div>
-</div>
+  <div class="spacer"></div>
+  <div class="role">
+    <label>אני</label>
+    <select id="role">
+      <option value="אחות">אחות</option>
+      <option value="מתמחה">מתמחה</option>
+      <option value="מומחה">רופא/ה בכיר/ה</option>
+    </select>
+  </div>
+</header>
 
-<!-- ===== אפליקציה ===== -->
-<div id="app" class="hidden">
-  <header>
-    <div class="brand">
-      <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke-width="2.2"/></svg></div>
-      <div>
-        <div class="title">לוח בקשות</div>
-        <div class="sub">יולדות ב׳ · בזמן אמת <span id="syncInfo"></span></div>
-      </div>
-    </div>
-    <div class="spacer"></div>
-    <div class="role">
-      <label>אני</label>
-      <select id="role">
-        <option value="אחות">אחות</option>
-        <option value="מתמחה">מתמחה</option>
-        <option value="מומחה">רופא/ה בכיר/ה</option>
-      </select>
-    </div>
-    <button class="ghost-btn" id="lockBtn" title="יציאה" aria-label="יציאה"><svg class="ic" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></button>
-  </header>
-
-  <div class="seg">
-    <button data-tab="requests" id="tabReq" class="on"><svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg> בקשות</button>
-    <button data-tab="patients" id="tabPat"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7v12M3 13h15a3 3 0 0 1 3 3v3M21 19v-3"/><circle cx="8" cy="10.5" r="2.2"/></svg> מטופלות</button>
+<main>
+  <div class="banner" id="banner"></div>
+  <div class="toolbar">
+    <button class="btn primary" id="uploadBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg> העלאת דוח התזונה</button>
+    <button class="btn" id="addPatBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> מטופלת</button>
+    <span class="grow"></span>
+    <button class="btn ghost" id="newdayBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M4 5h16M7 5V3M17 5V3M5 9h14v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/></svg> יום חדש</button>
+    <input type="file" id="file" accept="image/*" capture="environment" hidden>
   </div>
 
-  <main id="screenRequests">
-    <div class="banner" id="banner"></div>
-    <button class="primary" id="newReqBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> בקשה חדשה</button>
-    <div class="chips" id="filters">
-      <button class="chip on" data-f="open">פתוחות</button>
-      <button class="chip" data-f="urgent">דחופות</button>
-      <button class="chip" data-f="mine">שלי</button>
-      <button class="chip" data-f="done">בוצעו</button>
+  <div class="tablewrap">
+    <div class="scroll">
+      <table>
+        <thead><tr>
+          <th>חדר</th>
+          <th class="name">שם</th>
+          <th>מועמדת<br>לשחרור</th>
+          <th>נכתב ע״י<br>מתמחה</th>
+          <th>חתומה</th>
+          <th>בקשות<br>סיעוד</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
     </div>
-    <div id="reqList"></div>
-  </main>
-
-  <main id="screenPatients" class="hidden">
-    <div class="drop" id="drop">
-      <div class="dic"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
-      צלם/י או העלה/י את <b>דוח התזונה</b> של המחלקה
-      <div class="hint">המערכת תקרא את החדרים והשמות אוטומטית · ת״ז לא נשמרת</div>
-      <input type="file" id="file" accept="image/*" capture="environment" hidden>
-    </div>
-    <button class="secondary" id="addPatBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> הוספת מטופלת ידנית</button>
-    <div id="patList"></div>
-  </main>
-</div>
+    <div class="empty hidden" id="empty"><div class="eic"><svg class="ic" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M3 7v12M3 13h15a3 3 0 0 1 3 3v3M21 19v-3"/><circle cx="8" cy="10.5" r="2.2"/></svg></div>אין מטופלות עדיין — העלה/י את דוח התזונה כדי להתחיל</div>
+  </div>
+</main>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============ הגדרות ============ */
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbw58XPl_FVQtX_0WwPhh9jVygaaOir-Jig2IvdtxXGhchlobkCwOxAUj1Mm4EC3u8c-jg/exec";
 const POLL_MS = 12000;
 const $ = s => document.querySelector(s);
@@ -244,266 +195,544 @@ const ICONS = {
   'בדיקת מעבדה':'<path d="M9 3h6M10 3v6l-5.2 8.6A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.4L14 9V3"/><path d="M7.5 15h9"/>',
   'צילום / הדמיה':'<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M4 12h16"/>',
   'ביטול תרופה':'<path d="M3 12a4 4 0 0 1 4-4h10a4 4 0 0 1 0 8H7a4 4 0 0 1-4-4z"/><path d="M7.5 8.5l9 7"/>',
-  'חתימת שחרור':'<path d="M7 3h7l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v4h4M8.5 13.5h7M8.5 17h4.5"/>',
   'אחר':'<circle cx="5.5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.4" fill="currentColor" stroke="none"/>'
 };
-const svgIcon = (label,cls) => `<svg class="ic ${cls||''}" viewBox="0 0 24 24">${ICONS[label]||ICONS['אחר']}</svg>`;
+const svgIcon = l => `<svg class="ic" viewBox="0 0 24 24">${ICONS[l]||ICONS['אחר']}</svg>`;
 const TYPES = Object.keys(ICONS);
+const CHECK = '<svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
 
-const DISCHARGE = [
-  {k:'unsigned', label:'לא חתומה'},
-  {k:'intern',   label:'חתומה מתמחה'},
-  {k:'ready',    label:'מוכנה לשחרור'},
-];
+const STAGES = [{k:'unsigned'},{k:'intern'},{k:'ready'}];
+const stageIdx = d => STAGES.findIndex(s=>s.k===d);
 const STATUS_HE = {new:'ממתין', progress:'בטיפול', done:'בוצע'};
 
 let state = {patients:[], requests:[], log:[]};
-let CODE = '';
-let curTab = 'requests';
-let curFilter = 'open';
+let expandedId = null;
 
-/* ============ תפקיד ============ */
 const roleSel = $('#role');
 roleSel.value = localStorage.getItem('role') || 'אחות';
 roleSel.onchange = ()=>{ localStorage.setItem('role', roleSel.value); render(); };
 const who = ()=> roleSel.value;
 
-/* ============ כניסה ============ */
-function showGate(msg){ $('#gate').classList.remove('hidden'); $('#app').classList.add('hidden'); $('#gateErr').textContent=msg||''; $('#codeIn').value=''; $('#codeIn').focus(); }
-function enterApp(){ $('#gate').classList.add('hidden'); $('#app').classList.remove('hidden'); }
-async function tryEnter(){
-  const code = $('#codeIn').value.trim();
-  if(!code){ $('#gateErr').textContent='נא להזין קוד.'; return; }
-  $('#gateErr').textContent='בודק…'; CODE=code;
-  try{ await api(null); localStorage.setItem('code',code); enterApp(); render(); startPolling(); }
-  catch(e){ CODE=''; $('#gateErr').textContent = e.message==='bad_code' ? 'קוד שגוי, נסה/י שוב.' : ('שגיאה: '+e.message); }
-}
-$('#enterBtn').onclick = tryEnter;
-$('#codeIn').onkeydown = e=>{ if(e.key==='Enter') tryEnter(); };
-$('#lockBtn').onclick = ()=>{ localStorage.removeItem('code'); CODE=''; showGate(''); };
-
-/* ============ API ============ */
 async function api(payload){
   let url=ENDPOINT, opt;
-  if(payload){ payload.code=CODE; opt={method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}; }
-  else { url=ENDPOINT+'?code='+encodeURIComponent(CODE); opt={method:'GET'}; }
+  if(payload){ opt={method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}; }
+  else { opt={method:'GET'}; }
   const res = await fetch(url,opt);
   if(!res.ok) throw new Error('HTTP '+res.status);
   const data = await res.json();
   if(data.error) throw new Error(data.error);
   state = data; return data;
 }
-async function refresh(){
-  try{ await api(null); render(); hideBanner(); }
-  catch(e){ if(e.message==='bad_code'){ showGate('הקוד אינו בתוקף — היכנס/י שוב.'); return; } showBanner('אין חיבור כרגע — מנסה שוב…'); }
-}
-async function send(payload, okMsg){
-  try{ await api(payload); render(); hideBanner(); if(okMsg) toast(okMsg); }
-  catch(e){ if(e.message==='bad_code'){ showGate('הקוד אינו בתוקף — היכנס/י שוב.'); return; } showBanner('הפעולה לא נשמרה: '+e.message); }
-}
-/* שליחה ברקע — ה-UI כבר עודכן מיידית; כאן רק מסנכרנים מול השרת */
-function bg(payload){
-  api(payload).then(()=>{ render(); hideBanner(); })
-    .catch(e=>{ if(e.message==='bad_code') showGate('הקוד אינו בתוקף — היכנס/י שוב.'); else refresh(); });
-}
+async function refresh(){ try{ await api(null); render(); hideBanner(); }catch(e){ showBanner('אין חיבור כרגע — מנסה שוב…'); } }
+function bg(payload){ api(payload).then(()=>{ render(); hideBanner(); }).catch(()=>refresh()); }
+async function send(payload, ok){ try{ await api(payload); render(); hideBanner(); if(ok) toast(ok); }catch(e){ showBanner('הפעולה לא נשמרה: '+e.message); } }
 
-/* ============ ניווט ============ */
-document.querySelectorAll('.seg button').forEach(t=> t.onclick = ()=>{
-  curTab = t.dataset.tab;
-  document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on', x===t));
-  $('#screenRequests').classList.toggle('hidden', curTab!=='requests');
-  $('#screenPatients').classList.toggle('hidden', curTab!=='patients');
-});
-document.querySelectorAll('#filters .chip').forEach(c=> c.onclick = ()=>{
-  curFilter = c.dataset.f;
-  document.querySelectorAll('#filters .chip').forEach(x=>x.classList.toggle('on', x===c));
-  renderRequests();
-});
-
-/* ============ רינדור ============ */
-function render(){ renderRequests(); renderPatients(); $('#syncInfo').textContent = '· '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}); }
-
-function ago(ms){
-  if(!ms) return '';
-  const m = Math.floor((Date.now()-ms)/60000);
-  if(m<1) return 'עכשיו'; if(m<60) return 'לפני '+m+' ד׳';
-  const h=Math.floor(m/60); return 'לפני '+h+' שע׳'+(m%60?' '+(m%60)+' ד׳':'');
-}
-
-function renderRequests(){
-  const box=$('#reqList'); box.innerHTML='';
-  let list=(state.requests||[]).slice();
-  const ord={new:0, progress:1, done:2};
-  list.sort((a,b)=> (ord[a.status]-ord[b.status]) || ((b.priority==='urgent')-(a.priority==='urgent')) || (a.createdAtMs-b.createdAtMs));
-  if(curFilter==='open')   list=list.filter(r=>r.status!=='done');
-  if(curFilter==='urgent') list=list.filter(r=>r.priority==='urgent' && r.status!=='done');
-  if(curFilter==='mine')   list=list.filter(r=> (r.createdBy===who()||r.takenBy===who()) && r.status!=='done');
-  if(curFilter==='done')   list=list.filter(r=>r.status==='done');
-
-  if(!list.length){
-    box.innerHTML='<div class="empty"><div class="eic"><svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><p>אין בקשות '+(curFilter==='done'?'שבוצעו':'פתוחות')+' כרגע</p></div>';
-    return;
-  }
-  list.forEach(r=>{
-    const d=document.createElement('div'); d.className='req s-'+r.status;
-    const urgent = r.priority==='urgent' && r.status!=='done';
-    let acts='';
-    if(r.status==='new')      acts = `<button class="act take" data-a="reqTake" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M5 9l4-4 2 2M9 5v8a4 4 0 0 0 8 0v-3"/></svg> אני מטפל/ת</button><button class="act done" data-a="reqDone" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> בוצע</button><button class="act cancel" data-a="reqRemove" data-id="${r.id}">בטל</button>`;
-    else if(r.status==='progress') acts = `<button class="act done" data-a="reqDone" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> סומן כבוצע</button><button class="act reopen" data-a="reqReopen" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M9 14l-4-4 4-4M5 10h11a4 4 0 0 1 0 8h-1"/></svg></button>`;
-    else acts = `<button class="act reopen" data-a="reqReopen" data-id="${r.id}" style="flex:1"><svg class="ic" viewBox="0 0 24 24"><path d="M9 14l-4-4 4-4M5 10h11a4 4 0 0 1 0 8h-1"/></svg> החזר לפתוחות</button>`;
-
-    d.innerHTML = `
-      <div class="pad">
-        <div class="top">
-          <div class="room"><span class="lbl">חדר</span><span class="num">${esc(r.room)||'—'}</span></div>
-          <div style="flex:1"><div class="who">${esc(r.name)||'מטופלת'}</div></div>
-          ${urgent?'<span class="pill urgent">דחוף</span>':''}
-          <span class="pill s-${r.status}">${STATUS_HE[r.status]}</span>
-        </div>
-        <div class="type"><span class="tic">${svgIcon(r.type)}</span>${esc(r.type)}</div>
-        ${r.detail?`<div class="detail">${esc(r.detail)}</div>`:''}
-        <div class="meta">${r.createdBy?('ביקש/ה '+esc(r.createdBy)):''}${r.createdAtMs?(' · '+ago(r.createdAtMs)):''}${r.takenBy?(' · מטפל/ת '+esc(r.takenBy)):''}</div>
-      </div>
-      <div class="acts">${acts}</div>`;
-    box.appendChild(d);
-  });
-  box.querySelectorAll('[data-a]').forEach(b=> b.onclick = ()=>{
-    const a=b.dataset.a, id=b.dataset.id;
-    const r=(state.requests||[]).find(x=>x.id===id);
-    if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; state.requests=state.requests.filter(x=>x.id!==id); renderRequests(); bg({action:'reqRemove', id, by:who()}); return; }
-    if(r){
-      if(a==='reqTake'){ r.status='progress'; r.takenBy=who(); toast('נלקח לטיפול'); }
-      else if(a==='reqDone'){ r.status='done'; r.doneBy=who(); toast('סומן כבוצע'); }
-      else if(a==='reqReopen'){ r.status='new'; r.takenBy=''; }
-      renderRequests();
-    }
-    bg({action:a, id, by:who()});
-  });
-}
-
-function renderPatients(){
-  const box=$('#patList'); box.innerHTML='';
-  const list=(state.patients||[]).slice().sort((a,b)=> roomNum(a.room)-roomNum(b.room));
-  if(!list.length){ box.innerHTML='<div class="empty"><div class="eic"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7v12M3 13h15a3 3 0 0 1 3 3v3M21 19v-3"/><circle cx="8" cy="10.5" r="2.2"/></svg></div><p>אין מטופלות עדיין — העלה/י את דוח התזונה למעלה</p></div>'; return; }
-  list.forEach(p=>{
-    const d=document.createElement('div'); d.className='pat';
-    const chips=DISCHARGE.map(s=>`<button class="ds ${s.k} ${p.discharge===s.k?'on':''}" data-id="${p.id}" data-v="${s.k}">${s.label}</button>`).join('');
-    d.innerHTML=`
-      <div class="head">
-        <div class="room"><span class="lbl">חדר</span><span class="num">${esc(p.room)||'—'}</span></div>
-        <div class="info"><div class="who">${esc(p.name)||'מטופלת'}</div>
-        <div class="submeta">${esc(p.diet)||''}${p.admissionDate?' · קבלה '+esc(p.admissionDate):''}</div></div>
-        <button class="ghost-btn" data-rm="${p.id}" aria-label="הסרה"><svg class="ic" viewBox="0 0 24 24"><path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13"/></svg></button>
-      </div>
-      <div class="ds-row">${chips}</div>`;
-    box.appendChild(d);
-  });
-  box.querySelectorAll('.ds').forEach(b=> b.onclick=()=>{
-    const p=state.patients.find(x=>x.id===b.dataset.id);
-    const v = (p && p.discharge===b.dataset.v) ? '' : b.dataset.v;
-    if(p){ p.discharge=v; renderPatients(); }
-    bg({action:'patDischarge', id:b.dataset.id, discharge:v, by:who()});
-  });
-  box.querySelectorAll('[data-rm]').forEach(b=> b.onclick=()=>{ if(!confirm('להסיר מטופלת?')) return; state.patients=state.patients.filter(x=>x.id!==b.dataset.rm); renderPatients(); bg({action:'patRemove', id:b.dataset.rm, by:who()}); });
-}
 function roomNum(r){ const m=String(r||'').match(/\d+/); return m?+m[0]:999; }
+function ago(ms){ if(!ms) return ''; const m=Math.floor((Date.now()-ms)/60000); if(m<1) return 'עכשיו'; if(m<60) return 'לפני '+m+' ד׳'; return 'לפני '+Math.floor(m/60)+' שע׳'; }
+function openReqs(room){ return (state.requests||[]).filter(r=>norm(r.room)===norm(room) && r.status!=='done'); }
+function allReqs(room){ return (state.requests||[]).filter(r=>norm(r.room)===norm(room)); }
+function norm(s){ return String(s==null?'':s).trim().toLowerCase(); }
 
-/* ============ בקשה חדשה ============ */
-let nrRoom=null, nrName='', nrType=null, nrUrgent=false;
-function openNewReq(){
-  nrRoom=null; nrName=''; nrType=null; nrUrgent=false;
-  const rooms=(state.patients||[]).slice().sort((a,b)=>roomNum(a.room)-roomNum(b.room));
-  const roomOpts = rooms.map(p=>`<button class="opt room-opt" data-room="${esc(p.room)}" data-name="${esc(p.name)}"><span class="rnum">${esc(p.room)}</span><span class="rname">${esc(p.name)||''}</span></button>`).join('')
-    + `<button class="opt room-opt" data-other="1"><span class="rnum">+</span><span class="rname">חדר אחר</span></button>`;
-  const typeOpts = TYPES.map(t=>`<button class="opt" data-type="${t}"><span class="oic">${svgIcon(t)}</span>${t}</button>`).join('');
+function render(){
+  renderTable();
+  $('#syncInfo').textContent = '· '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+}
 
+function renderTable(){
+  const tb=$('#rows'); tb.innerHTML='';
+  const list=(state.patients||[]).slice().sort((a,b)=>roomNum(a.room)-roomNum(b.room));
+  $('#empty').classList.toggle('hidden', list.length>0);
+
+  list.forEach(p=>{
+    const si=stageIdx(p.discharge);
+    const tr=document.createElement('tr');
+    if(p.discharge) tr.className='r-'+p.discharge;
+    const cell=(j,k)=>`<button class="chk ${k} ${j<=si?'on':''}" data-stage="${k}" data-id="${p.id}" aria-label="שלב">${CHECK}</button>`;
+    const open=openReqs(p.room).length;
+    const reqCell = open
+      ? `<button class="reqbtn" data-req="${p.id}"><span class="badge has"><svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>${open}</span></button>`
+      : `<button class="reqbtn" data-req="${p.id}"><span style="color:var(--ink3)">＋</span></button>`;
+    tr.innerHTML=`
+      <td class="room">${esc(p.room)||'—'}</td>
+      <td class="name">${esc(p.name)||'מטופלת'}${p.diet?`<div class="diet">${esc(p.diet)}</div>`:''}</td>
+      <td>${cell(0,'unsigned')}</td>
+      <td>${cell(1,'intern')}</td>
+      <td>${cell(2,'ready')}</td>
+      <td>${reqCell}</td>`;
+    tb.appendChild(tr);
+    if(expandedId===p.id) tb.appendChild(detailRow(p));
+  });
+
+  tb.querySelectorAll('[data-stage]').forEach(b=> b.onclick=()=>{
+    const p=state.patients.find(x=>x.id===b.dataset.id); if(!p) return;
+    const target=b.dataset.stage;
+    const cur=p.discharge, next = (cur===target) ? '' : target;
+    p.discharge=next; renderTable();
+    bg({action:'patDischarge', id:p.id, discharge:next, by:who()});
+  });
+  tb.querySelectorAll('[data-req]').forEach(b=> b.onclick=()=>{ expandedId = (expandedId===b.dataset.req)?null:b.dataset.req; renderTable(); });
+}
+
+function detailRow(p){
+  const tr=document.createElement('tr'); tr.className='detail';
+  const reqs=allReqs(p.room).sort((a,b)=>({new:0,progress:1,done:2}[a.status]-{new:0,progress:1,done:2}[b.status]) || (a.createdAtMs-b.createdAtMs));
+  const cards = reqs.map(r=>{
+    const urgent=r.priority==='urgent'&&r.status!=='done';
+    let acts='';
+    if(r.status==='new') acts=`<button class="mini take" data-a="reqTake" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M5 9l4-4 2 2M9 5v8a4 4 0 0 0 8 0v-3"/></svg>אני מטפל/ת</button><button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}בוצע</button><button class="mini cancel" data-a="reqRemove" data-id="${r.id}">בטל</button>`;
+    else if(r.status==='progress') acts=`<button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}בוצע</button><button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎</button>`;
+    else acts=`<button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎ החזר</button>`;
+    return `<div class="reqcard">
+      <span class="tic">${svgIcon(r.type)}</span>
+      <div class="body"><div class="ty">${esc(r.type)}</div>${r.detail?`<div class="de">${esc(r.detail)}</div>`:''}<div class="mt">${r.createdBy?'ביקש/ה '+esc(r.createdBy):''}${r.createdAtMs?' · '+ago(r.createdAtMs):''}${r.takenBy?' · מטפל/ת '+esc(r.takenBy):''}</div><div class="ract">${acts}</div></div>
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">${urgent?'<span class="pill urgent">דחוף</span>':''}<span class="pill s-${r.status}">${STATUS_HE[r.status]}</span></div>
+    </div>`;
+  }).join('');
+  tr.innerHTML=`<td colspan="6"><div class="inner">
+    <div class="dh">בקשות סיעוד · חדר ${esc(p.room)} · ${esc(p.name)||'מטופלת'}</div>
+    ${cards||'<div style="font-size:13px;color:var(--ink3)">אין בקשות פתוחות</div>'}
+    <button class="addreq" data-add="${p.id}"><svg class="ic" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M12 5v14M5 12h14"/></svg>בקשת סיעוד חדשה</button>
+  </div></td>`;
+  setTimeout(()=>{
+    tr.querySelectorAll('[data-a]').forEach(b=> b.onclick=()=>{
+      const a=b.dataset.a, id=b.dataset.id, r=(state.requests||[]).find(x=>x.id===id);
+      if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; state.requests=state.requests.filter(x=>x.id!==id); renderTable(); bg({action:'reqRemove',id,by:who()}); return; }
+      if(r){ if(a==='reqTake'){r.status='progress';r.takenBy=who();} else if(a==='reqDone'){r.status='done';} else if(a==='reqReopen'){r.status='new';r.takenBy='';} renderTable(); }
+      bg({action:a,id,by:who()});
+    });
+    const ab=tr.querySelector('[data-add]'); if(ab) ab.onclick=()=>openNewReq(p.room,p.name);
+  },0);
+  return tr;
+}
+
+let nrType=null, nrUrgent=false, nrRoom='', nrName='';
+function openNewReq(room,name){
+  nrType=null; nrUrgent=false; nrRoom=room||''; nrName=name||'';
+  const typeOpts=TYPES.map(t=>`<button class="opt" data-type="${t}"><span class="oic">${svgIcon(t)}</span>${t}</button>`).join('');
   const ov=document.createElement('div'); ov.className='overlay'; ov.id='nrOverlay';
   ov.innerHTML=`<div class="sheet">
     <div class="grab"></div>
-    <h2>בקשה חדשה</h2>
-    <div class="step">באיזה חדר?</div>
-    <div class="grid" id="nrRooms">${roomOpts}</div>
-    <div id="nrOther" class="hidden"><input class="text-in" id="nrRoomIn" placeholder="מספר חדר (למשל 7/1)"><input class="text-in" id="nrNameIn" placeholder="שם המטופלת (לא חובה)"></div>
+    <h2>בקשת סיעוד חדשה</h2>
+    <div class="for">חדר ${esc(nrRoom)} · ${esc(nrName)||'מטופלת'}</div>
     <div class="step">מה צריך מהרופא/ה?</div>
     <div class="grid" id="nrTypes">${typeOpts}</div>
     <div class="step">דחיפות</div>
-    <div class="urg"><button class="opt" id="nrNormal" style="justify-content:center" data-on="1">רגיל</button><button class="opt" id="nrUrgent" style="justify-content:center">דחוף</button></div>
+    <div class="urg"><button class="opt on" id="nrNormal" style="justify-content:center">רגיל</button><button class="opt" id="nrUrgent" style="justify-content:center">דחוף</button></div>
     <div class="step">פרטים / הערה (לא חובה)</div>
     <textarea id="nrDetail" placeholder="לדוגמה: מתלוננת על כאב ראש ולחץ דם 150/95, נא להעריך"></textarea>
     <div class="sheet-acts">
-      <button class="secondary" id="nrCancel">ביטול</button>
-      <button class="primary" id="nrSend"><svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> שליחת בקשה</button>
+      <button class="btn ghost" id="nrCancel">ביטול</button>
+      <button class="btn primary" id="nrSend">${CHECK} שליחה</button>
     </div>
   </div>`;
   document.body.appendChild(ov);
-  $('#nrNormal').classList.add('on');
-  ov.onclick = e=>{ if(e.target===ov) closeNewReq(); };
-  ov.querySelectorAll('[data-room]').forEach(b=> b.onclick=()=>{
-    ov.querySelectorAll('#nrRooms .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on');
-    $('#nrOther').classList.add('hidden'); nrRoom=b.dataset.room; nrName=b.dataset.name||'';
-  });
-  ov.querySelector('[data-other]').onclick = (e)=>{
-    ov.querySelectorAll('#nrRooms .opt').forEach(x=>x.classList.remove('on')); e.currentTarget.classList.add('on');
-    $('#nrOther').classList.remove('hidden'); nrRoom=''; nrName='';
-  };
-  ov.querySelectorAll('[data-type]').forEach(b=> b.onclick=()=>{
-    ov.querySelectorAll('#nrTypes .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); nrType=b.dataset.type;
-  });
-  $('#nrNormal').onclick=()=>{ nrUrgent=false; $('#nrNormal').classList.add('on'); $('#nrNormal').classList.remove('urgent'); $('#nrUrgent').classList.remove('on','urgent'); };
+  ov.onclick=e=>{ if(e.target===ov) closeNR(); };
+  ov.querySelectorAll('[data-type]').forEach(b=> b.onclick=()=>{ ov.querySelectorAll('#nrTypes .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); nrType=b.dataset.type; });
+  $('#nrNormal').onclick=()=>{ nrUrgent=false; $('#nrNormal').classList.add('on'); $('#nrUrgent').classList.remove('on','urgent'); };
   $('#nrUrgent').onclick=()=>{ nrUrgent=true; $('#nrUrgent').classList.add('on','urgent'); $('#nrNormal').classList.remove('on'); };
-  $('#nrCancel').onclick=closeNewReq;
-  $('#nrSend').onclick=submitNewReq;
+  $('#nrCancel').onclick=closeNR; $('#nrSend').onclick=submitNR;
 }
-function closeNewReq(){ const o=$('#nrOverlay'); if(o) o.remove(); }
-function submitNewReq(){
-  let room=nrRoom, name=nrName;
-  if($('#nrOther') && !$('#nrOther').classList.contains('hidden')){ room=$('#nrRoomIn').value.trim(); name=$('#nrNameIn').value.trim(); }
-  if(room===null || room===undefined){ toast('בחר/י חדר'); return; }
-  if(!room){ toast('הקלד/י מספר חדר'); return; }
+function closeNR(){ const o=$('#nrOverlay'); if(o) o.remove(); }
+function submitNR(){
   if(!nrType){ toast('בחר/י סוג בקשה'); return; }
-  const detail=$('#nrDetail').value.trim();
-  const type=nrType, urgent=nrUrgent;
-  closeNewReq();
-  // הוספה מיידית ל-UI; השרת מסנכרן ברקע
+  const detail=$('#nrDetail').value.trim(), room=nrRoom, name=nrName, type=nrType, urgent=nrUrgent;
+  closeNR();
   state.requests=state.requests||[];
   state.requests.push({id:'tmp'+Date.now(), room, name, type, detail, priority:urgent?'urgent':'normal', status:'new', createdBy:who(), createdAtMs:Date.now(), takenBy:'', doneBy:''});
-  curTab='requests'; document.querySelector('[data-tab="requests"]').click(); render(); toast('הבקשה נשלחה');
+  expandedId = (state.patients.find(x=>norm(x.room)===norm(room))||{}).id || expandedId;
+  renderTable(); toast('הבקשה נשלחה');
   bg({action:'reqAdd', room, name, type, detail, priority:urgent?'urgent':'normal', by:who()});
 }
-$('#newReqBtn').onclick = openNewReq;
 
-/* ============ תמונה ============ */
-const drop=$('#drop'), file=$('#file');
-drop.onclick=()=>file.click();
+const file=$('#file');
+$('#uploadBtn').onclick=()=>file.click();
 file.onchange=()=> file.files[0] && handleImage(file.files[0]);
-['dragover','dragenter'].forEach(ev=> drop.addEventListener(ev,e=>{e.preventDefault();}));
-drop.addEventListener('drop', e=>{ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f) handleImage(f); });
 async function handleImage(f){
-  const orig=drop.innerHTML; drop.innerHTML='<div class="spin"></div><div style="margin-top:10px">קורא את הרשימה…</div>';
+  const btn=$('#uploadBtn'), orig=btn.innerHTML; btn.innerHTML='<span class="spin"></span> קורא…';
   try{ const {b64,mediaType}=await resize(f); await send({action:'extract', image:b64, mediaType}, 'הרשימה נטענה'); }
   catch(e){ showBanner('קריאת התמונה נכשלה: '+e.message); }
-  finally{ drop.innerHTML=orig; file.value=''; }
+  finally{ btn.innerHTML=orig; file.value=''; }
 }
 function resize(f){ return new Promise((res,rej)=>{ const img=new Image(); img.onload=()=>{ const max=1600, sc=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement('canvas'); c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc); c.getContext('2d').drawImage(img,0,0,c.width,c.height); const u=c.toDataURL('image/jpeg',0.85); res({b64:u.split(',')[1], mediaType:'image/jpeg'}); }; img.onerror=rej; img.src=URL.createObjectURL(f); }); }
-
 $('#addPatBtn').onclick=()=>{ const room=prompt('מספר חדר/מיטה:'); if(room===null) return; const name=prompt('שם המטופלת:'); if(name===null) return; send({action:'patAdd', room:room.trim(), name:name.trim(), by:who()}); };
+$('#newdayBtn').onclick=()=>{ if(confirm('לפתוח יום חדש ולנקות את הלוח? פעולה זו אינה הפיכה.')) send({action:'newday'},'הלוח נוקה'); };
 
-/* ============ toast / banner ============ */
-let tT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tT); tT=setTimeout(()=>t.classList.remove('show'),3200); }
+let tT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tT); tT=setTimeout(()=>t.classList.remove('show'),3000); }
 function showBanner(m){ const b=$('#banner'); b.textContent=m; b.classList.add('show'); }
 function hideBanner(){ $('#banner').classList.remove('show'); }
 function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ============ polling ============ */
-let pollTimer=null;
-function startPolling(){ if(!pollTimer) pollTimer=setInterval(()=>{ if(!$('#nrOverlay')) refresh(); }, POLL_MS); }
+setInterval(()=>{ if(!$('#nrOverlay')) refresh(); }, POLL_MS);
+api(null).then(render).catch(()=>showBanner('אין חיבור לשרת — בדוק/בדקי חיבור.'));
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>לוח מחלקה — יולדות ב׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f5f7; --surface:#ffffff; --surface-2:#fbfbfd;
+    --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#a1a1a6; --line:#e7e7ec; --line-2:#dededf;
+    --accent:#0071e3; --accent-press:#0062c4;
+    --red:#ff3b30; --red-bg:#fdeceb; --red-tint:#fff6f5;
+    --orange:#ff9500; --orange-bg:#fef1df; --orange-tint:#fffaf2;
+    --green:#30a46c; --green-bg:#e7f6ee; --green-tint:#f4fbf7;
+    --r-card:18px; --r-ctl:12px;
+    --sh-sm:0 1px 2px rgba(0,0,0,.05);
+    --sh-md:0 6px 20px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+    --sh-lg:0 16px 40px rgba(0,0,0,.14);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--ink); font-family:"Heebo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:16px; line-height:1.5; letter-spacing:-.01em; -webkit-font-smoothing:antialiased; padding-bottom:40px}
+  button{font-family:inherit; cursor:pointer; color:inherit}
+  svg{display:block}
+  .hidden{display:none !important}
+  .ic{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex:none}
 
-/* ============ init ============ */
-(function init(){
-  const saved=localStorage.getItem('code');
-  if(saved){ CODE=saved; api(null).then(()=>{ enterApp(); render(); startPolling(); }).catch(()=>{ CODE=''; localStorage.removeItem('code'); showGate(''); }); }
-  else showGate('');
-})();
+  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.78); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); padding:11px 18px; display:flex; align-items:center; gap:12px}
+  header .logo{width:38px; height:38px; border-radius:11px; background:linear-gradient(160deg,#0a84ff,#0060c4); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,113,227,.3)}
+  header .logo svg{width:21px; height:21px; stroke:#fff; fill:none; stroke-width:1.8}
+  header .title{font-size:18px; font-weight:600; letter-spacing:-.02em; line-height:1.15}
+  header .sub{font-size:12px; color:var(--ink3); margin-top:1px}
+  .spacer{flex:1}
+  .role{display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--line); border-radius:11px; padding:7px 11px}
+  .role label{font-size:13px; color:var(--ink2)}
+  .role select{border:none; background:transparent; font-size:15px; font-weight:600; color:var(--ink); outline:none}
+
+  main{max-width:920px; margin:0 auto; padding:16px}
+  .toolbar{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:14px; align-items:center}
+  .btn{border:1px solid var(--line-2); background:var(--surface); border-radius:12px; padding:11px 15px; font-size:15px; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:8px; transition:.15s; box-shadow:var(--sh-sm)}
+  .btn:active{transform:scale(.98)}
+  .btn .ic{width:19px; height:19px}
+  .btn.primary{background:var(--accent); color:#fff; border-color:transparent; box-shadow:0 4px 14px rgba(0,113,227,.26)}
+  .btn.ghost{background:transparent; box-shadow:none; color:var(--ink2)}
+  .grow{flex:1}
+  .synced{font-size:12px; color:var(--ink3)}
+
+  .tablewrap{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-card); box-shadow:var(--sh-md); overflow:hidden}
+  .scroll{overflow-x:auto}
+  table{width:100%; border-collapse:collapse; font-size:14.5px; min-width:660px}
+  thead th{position:sticky; top:0; background:var(--surface-2); font-weight:600; color:var(--ink2); font-size:12.5px; padding:11px 6px; border-bottom:1px solid var(--line); text-align:center; line-height:1.25}
+  thead th.name{text-align:right; padding-inline-start:14px}
+  tbody td{padding:10px 6px; border-bottom:1px solid var(--line); text-align:center; vertical-align:middle}
+  tbody tr:last-child td{border-bottom:none}
+  td.room{font-weight:700; font-size:16px; width:46px}
+  td.name{text-align:right; padding-inline-start:14px; font-weight:600; font-size:15.5px}
+  td.name .diet{font-size:12px; color:var(--ink3); font-weight:400; margin-top:1px}
+
+  tr.r-unsigned td{background:var(--red-tint)}
+  tr.r-intern td{background:var(--orange-tint)}
+  tr.r-ready td{background:var(--green-tint)}
+
+  .chk{width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line-2); background:var(--surface); display:inline-flex; align-items:center; justify-content:center; color:var(--ink3); transition:.12s}
+  .chk .ic{width:18px; height:18px; stroke-width:2.4; opacity:0}
+  .chk.on .ic{opacity:1}
+  .chk.on.unsigned{background:var(--red); border-color:var(--red); color:#fff}
+  .chk.on.intern{background:var(--orange); border-color:var(--orange); color:#fff}
+  .chk.on.ready{background:var(--green); border-color:var(--green); color:#fff}
+
+  .reqbtn{border:none; background:transparent; padding:6px; display:inline-flex; align-items:center; justify-content:center; gap:5px; border-radius:10px; color:var(--ink3); font-weight:600; font-size:14px}
+  .reqbtn .badge{display:inline-flex; align-items:center; gap:4px; background:var(--bg-accent,#e6f1fb); color:var(--accent); border-radius:999px; padding:3px 9px; font-weight:600}
+  .reqbtn .badge.has{background:var(--accent); color:#fff}
+  .reqbtn .ic{width:18px; height:18px}
+  .rm{border:none; background:transparent; color:var(--ink3); padding:6px; border-radius:8px}
+  .rm:hover{color:var(--red)}
+
+  .detail td{background:var(--surface-2); padding:0; text-align:right}
+  .detail .inner{padding:13px 16px; display:flex; flex-direction:column; gap:9px}
+  .detail .dh{font-size:12.5px; color:var(--ink2); font-weight:600}
+  .reqcard{display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 12px}
+  .reqcard .tic{width:32px; height:32px; border-radius:9px; background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--accent); flex:none}
+  .reqcard .tic .ic{width:19px; height:19px}
+  .reqcard .body{flex:1; min-width:0}
+  .reqcard .ty{font-weight:600; font-size:15px}
+  .reqcard .de{font-size:13px; color:var(--ink2); margin-top:1px}
+  .reqcard .mt{font-size:11.5px; color:var(--ink3); margin-top:2px}
+  .pill{border-radius:999px; padding:3px 10px; font-size:12px; font-weight:600; white-space:nowrap}
+  .pill.s-new{background:var(--red-bg); color:var(--red)}
+  .pill.s-progress{background:var(--orange-bg); color:#b06900}
+  .pill.s-done{background:var(--green-bg); color:var(--green)}
+  .pill.urgent{background:var(--red); color:#fff}
+  .ract{display:flex; gap:7px; flex-wrap:wrap; margin-top:2px}
+  .mini{border:none; border-radius:9px; padding:8px 12px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:5px}
+  .mini .ic{width:15px; height:15px; stroke-width:2.4}
+  .mini.take{background:var(--accent); color:#fff}
+  .mini.done{background:var(--green); color:#fff}
+  .mini.reopen{background:var(--bg); color:var(--ink2); border:1px solid var(--line-2)}
+  .mini.cancel{background:transparent; color:var(--red)}
+  .addreq{align-self:flex-start; background:var(--surface); border:1px dashed var(--line-2); color:var(--accent); border-radius:11px; padding:10px 14px; font-weight:600; font-size:14px; display:inline-flex; align-items:center; gap:7px}
+
+  .empty{text-align:center; color:var(--ink2); padding:50px 24px}
+  .empty .eic{width:50px; height:50px; border-radius:15px; background:var(--bg); display:flex; align-items:center; justify-content:center; margin:0 auto 13px; color:var(--ink3)}
+
+  .overlay{position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.32); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .sheet{background:var(--bg); width:100%; max-width:560px; max-height:94vh; overflow:auto; border-radius:24px 24px 0 0; padding:10px 20px 26px; box-shadow:var(--sh-lg); animation:rise .28s cubic-bezier(.2,.8,.2,1)}
+  @keyframes rise{from{transform:translateY(40px)}to{transform:translateY(0)}}
+  .grab{width:38px; height:5px; border-radius:3px; background:var(--line-2); margin:8px auto 12px}
+  .sheet h2{font-size:22px; font-weight:700; margin:0 0 2px; letter-spacing:-.02em}
+  .sheet .for{font-size:14px; color:var(--ink2); margin-bottom:6px}
+  .step{font-size:13px; font-weight:600; color:var(--ink3); margin:20px 0 10px}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px}
+  .opt{display:flex; align-items:center; gap:11px; border:1.5px solid var(--line-2); background:var(--surface); border-radius:14px; padding:13px 14px; font-size:15px; font-weight:600; color:var(--ink); transition:.15s; text-align:right}
+  .opt .oic{width:36px; height:36px; border-radius:10px; background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--accent); flex:none}
+  .opt .oic .ic{width:20px; height:20px}
+  .opt.on{border-color:var(--accent); background:#f3f8ff; box-shadow:0 0 0 3px rgba(0,113,227,.12)}
+  .urg{display:flex; gap:10px}
+  .urg .opt{flex:1; justify-content:center}
+  .urg .opt.on.urgent{border-color:var(--red); background:var(--red-bg); box-shadow:0 0 0 3px rgba(255,59,48,.12); color:var(--red)}
+  textarea,.text-in{width:100%; border:1.5px solid var(--line-2); border-radius:14px; padding:13px 15px; font-size:16px; font-family:inherit; background:var(--surface); transition:.15s}
+  textarea{min-height:74px; resize:vertical}
+  textarea:focus,.text-in:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 4px rgba(0,113,227,.1)}
+  .text-in{margin-top:9px}
+  .sheet-acts{display:flex; gap:10px; margin-top:24px; position:sticky; bottom:0; background:linear-gradient(transparent,var(--bg) 24%); padding:14px 0 4px}
+  .sheet-acts .btn{flex:1; justify-content:center; padding:15px}
+
+  .toast{position:fixed; bottom:24px; left:50%; transform:translate(-50%,180%); background:rgba(29,29,31,.94); backdrop-filter:blur(10px); color:#fff; padding:13px 22px; border-radius:14px; font-size:15px; font-weight:600; z-index:400; transition:transform .35s cubic-bezier(.2,.9,.2,1); box-shadow:var(--sh-lg); max-width:90vw; text-align:center}
+  .toast.show{transform:translate(-50%,0)}
+  .banner{display:none; background:var(--orange-bg); color:#8a5200; border:1px solid #ffe2b3; border-radius:13px; padding:11px 14px; font-size:14px; margin-bottom:13px}
+  .banner.show{display:block}
+  .spin{width:20px; height:20px; border:2.5px solid rgba(0,0,0,.12); border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke-width="2.2"/></svg></div>
+  <div>
+    <div class="title">לוח מחלקה</div>
+    <div class="sub">יולדות ב׳ · בזמן אמת <span id="syncInfo"></span></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="role">
+    <label>אני</label>
+    <select id="role">
+      <option value="אחות">אחות</option>
+      <option value="מתמחה">מתמחה</option>
+      <option value="מומחה">רופא/ה בכיר/ה</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="banner" id="banner"></div>
+  <div class="toolbar">
+    <button class="btn primary" id="uploadBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg> העלאת דוח התזונה</button>
+    <button class="btn" id="addPatBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> מטופלת</button>
+    <span class="grow"></span>
+    <button class="btn ghost" id="newdayBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M4 5h16M7 5V3M17 5V3M5 9h14v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/></svg> יום חדש</button>
+    <input type="file" id="file" accept="image/*" capture="environment" hidden>
+  </div>
+
+  <div class="tablewrap">
+    <div class="scroll">
+      <table>
+        <thead><tr>
+          <th>חדר</th>
+          <th class="name">שם</th>
+          <th>מועמדת<br>לשחרור</th>
+          <th>נכתב ע״י<br>מתמחה</th>
+          <th>חתומה</th>
+          <th>בקשות<br>סיעוד</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="empty hidden" id="empty"><div class="eic"><svg class="ic" viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M3 7v12M3 13h15a3 3 0 0 1 3 3v3M21 19v-3"/><circle cx="8" cy="10.5" r="2.2"/></svg></div>אין מטופלות עדיין — העלה/י את דוח התזונה כדי להתחיל</div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbw58XPl_FVQtX_0WwPhh9jVygaaOir-Jig2IvdtxXGhchlobkCwOxAUj1Mm4EC3u8c-jg/exec";
+const POLL_MS = 12000;
+const $ = s => document.querySelector(s);
+
+const ICONS = {
+  'רישום תרופה':'<path d="M3 12a4 4 0 0 1 4-4h10a4 4 0 0 1 0 8H7a4 4 0 0 1-4-4z"/><path d="M12 8v8"/>',
+  'בדיקת יולדת':'<path d="M3 12h3.5l2 5 4-11 2.5 6H21"/>',
+  'בדיקת מעבדה':'<path d="M9 3h6M10 3v6l-5.2 8.6A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.4L14 9V3"/><path d="M7.5 15h9"/>',
+  'צילום / הדמיה':'<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M4 12h16"/>',
+  'ביטול תרופה':'<path d="M3 12a4 4 0 0 1 4-4h10a4 4 0 0 1 0 8H7a4 4 0 0 1-4-4z"/><path d="M7.5 8.5l9 7"/>',
+  'אחר':'<circle cx="5.5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.4" fill="currentColor" stroke="none"/>'
+};
+const svgIcon = l => `<svg class="ic" viewBox="0 0 24 24">${ICONS[l]||ICONS['אחר']}</svg>`;
+const TYPES = Object.keys(ICONS);
+const CHECK = '<svg class="ic" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+
+const STAGES = [{k:'unsigned'},{k:'intern'},{k:'ready'}];
+const stageIdx = d => STAGES.findIndex(s=>s.k===d);
+const STATUS_HE = {new:'ממתין', progress:'בטיפול', done:'בוצע'};
+
+let state = {patients:[], requests:[], log:[]};
+let expandedId = null;
+
+const roleSel = $('#role');
+roleSel.value = localStorage.getItem('role') || 'אחות';
+roleSel.onchange = ()=>{ localStorage.setItem('role', roleSel.value); render(); };
+const who = ()=> roleSel.value;
+
+async function api(payload){
+  let url=ENDPOINT, opt;
+  if(payload){ opt={method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}; }
+  else { opt={method:'GET'}; }
+  const res = await fetch(url,opt);
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const data = await res.json();
+  if(data.error) throw new Error(data.error);
+  state = data; return data;
+}
+async function refresh(){ try{ await api(null); render(); hideBanner(); }catch(e){ showBanner('אין חיבור כרגע — מנסה שוב…'); } }
+function bg(payload){ api(payload).then(()=>{ render(); hideBanner(); }).catch(()=>refresh()); }
+async function send(payload, ok){ try{ await api(payload); render(); hideBanner(); if(ok) toast(ok); }catch(e){ showBanner('הפעולה לא נשמרה: '+e.message); } }
+
+function roomNum(r){ const m=String(r||'').match(/\d+/); return m?+m[0]:999; }
+function ago(ms){ if(!ms) return ''; const m=Math.floor((Date.now()-ms)/60000); if(m<1) return 'עכשיו'; if(m<60) return 'לפני '+m+' ד׳'; return 'לפני '+Math.floor(m/60)+' שע׳'; }
+function openReqs(room){ return (state.requests||[]).filter(r=>norm(r.room)===norm(room) && r.status!=='done'); }
+function allReqs(room){ return (state.requests||[]).filter(r=>norm(r.room)===norm(room)); }
+function norm(s){ return String(s==null?'':s).trim().toLowerCase(); }
+
+function render(){
+  renderTable();
+  $('#syncInfo').textContent = '· '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+}
+
+function renderTable(){
+  const tb=$('#rows'); tb.innerHTML='';
+  const list=(state.patients||[]).slice().sort((a,b)=>roomNum(a.room)-roomNum(b.room));
+  $('#empty').classList.toggle('hidden', list.length>0);
+
+  list.forEach(p=>{
+    const si=stageIdx(p.discharge);
+    const tr=document.createElement('tr');
+    if(p.discharge) tr.className='r-'+p.discharge;
+    const cell=(j,k)=>`<button class="chk ${k} ${j<=si?'on':''}" data-stage="${k}" data-id="${p.id}" aria-label="שלב">${CHECK}</button>`;
+    const open=openReqs(p.room).length;
+    const reqCell = open
+      ? `<button class="reqbtn" data-req="${p.id}"><span class="badge has"><svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>${open}</span></button>`
+      : `<button class="reqbtn" data-req="${p.id}"><span style="color:var(--ink3)">＋</span></button>`;
+    tr.innerHTML=`
+      <td class="room">${esc(p.room)||'—'}</td>
+      <td class="name">${esc(p.name)||'מטופלת'}${p.diet?`<div class="diet">${esc(p.diet)}</div>`:''}</td>
+      <td>${cell(0,'unsigned')}</td>
+      <td>${cell(1,'intern')}</td>
+      <td>${cell(2,'ready')}</td>
+      <td>${reqCell}</td>`;
+    tb.appendChild(tr);
+    if(expandedId===p.id) tb.appendChild(detailRow(p));
+  });
+
+  tb.querySelectorAll('[data-stage]').forEach(b=> b.onclick=()=>{
+    const p=state.patients.find(x=>x.id===b.dataset.id); if(!p) return;
+    const target=b.dataset.stage;
+    const cur=p.discharge, next = (cur===target) ? '' : target;
+    p.discharge=next; renderTable();
+    bg({action:'patDischarge', id:p.id, discharge:next, by:who()});
+  });
+  tb.querySelectorAll('[data-req]').forEach(b=> b.onclick=()=>{ expandedId = (expandedId===b.dataset.req)?null:b.dataset.req; renderTable(); });
+}
+
+function detailRow(p){
+  const tr=document.createElement('tr'); tr.className='detail';
+  const reqs=allReqs(p.room).sort((a,b)=>({new:0,progress:1,done:2}[a.status]-{new:0,progress:1,done:2}[b.status]) || (a.createdAtMs-b.createdAtMs));
+  const cards = reqs.map(r=>{
+    const urgent=r.priority==='urgent'&&r.status!=='done';
+    let acts='';
+    if(r.status==='new') acts=`<button class="mini take" data-a="reqTake" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M5 9l4-4 2 2M9 5v8a4 4 0 0 0 8 0v-3"/></svg>אני מטפל/ת</button><button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}בוצע</button><button class="mini cancel" data-a="reqRemove" data-id="${r.id}">בטל</button>`;
+    else if(r.status==='progress') acts=`<button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}בוצע</button><button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎</button>`;
+    else acts=`<button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎ החזר</button>`;
+    return `<div class="reqcard">
+      <span class="tic">${svgIcon(r.type)}</span>
+      <div class="body"><div class="ty">${esc(r.type)}</div>${r.detail?`<div class="de">${esc(r.detail)}</div>`:''}<div class="mt">${r.createdBy?'ביקש/ה '+esc(r.createdBy):''}${r.createdAtMs?' · '+ago(r.createdAtMs):''}${r.takenBy?' · מטפל/ת '+esc(r.takenBy):''}</div><div class="ract">${acts}</div></div>
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">${urgent?'<span class="pill urgent">דחוף</span>':''}<span class="pill s-${r.status}">${STATUS_HE[r.status]}</span></div>
+    </div>`;
+  }).join('');
+  tr.innerHTML=`<td colspan="6"><div class="inner">
+    <div class="dh">בקשות סיעוד · חדר ${esc(p.room)} · ${esc(p.name)||'מטופלת'}</div>
+    ${cards||'<div style="font-size:13px;color:var(--ink3)">אין בקשות פתוחות</div>'}
+    <button class="addreq" data-add="${p.id}"><svg class="ic" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M12 5v14M5 12h14"/></svg>בקשת סיעוד חדשה</button>
+  </div></td>`;
+  setTimeout(()=>{
+    tr.querySelectorAll('[data-a]').forEach(b=> b.onclick=()=>{
+      const a=b.dataset.a, id=b.dataset.id, r=(state.requests||[]).find(x=>x.id===id);
+      if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; state.requests=state.requests.filter(x=>x.id!==id); renderTable(); bg({action:'reqRemove',id,by:who()}); return; }
+      if(r){ if(a==='reqTake'){r.status='progress';r.takenBy=who();} else if(a==='reqDone'){r.status='done';} else if(a==='reqReopen'){r.status='new';r.takenBy='';} renderTable(); }
+      bg({action:a,id,by:who()});
+    });
+    const ab=tr.querySelector('[data-add]'); if(ab) ab.onclick=()=>openNewReq(p.room,p.name);
+  },0);
+  return tr;
+}
+
+let nrType=null, nrUrgent=false, nrRoom='', nrName='';
+function openNewReq(room,name){
+  nrType=null; nrUrgent=false; nrRoom=room||''; nrName=name||'';
+  const typeOpts=TYPES.map(t=>`<button class="opt" data-type="${t}"><span class="oic">${svgIcon(t)}</span>${t}</button>`).join('');
+  const ov=document.createElement('div'); ov.className='overlay'; ov.id='nrOverlay';
+  ov.innerHTML=`<div class="sheet">
+    <div class="grab"></div>
+    <h2>בקשת סיעוד חדשה</h2>
+    <div class="for">חדר ${esc(nrRoom)} · ${esc(nrName)||'מטופלת'}</div>
+    <div class="step">מה צריך מהרופא/ה?</div>
+    <div class="grid" id="nrTypes">${typeOpts}</div>
+    <div class="step">דחיפות</div>
+    <div class="urg"><button class="opt on" id="nrNormal" style="justify-content:center">רגיל</button><button class="opt" id="nrUrgent" style="justify-content:center">דחוף</button></div>
+    <div class="step">פרטים / הערה (לא חובה)</div>
+    <textarea id="nrDetail" placeholder="לדוגמה: מתלוננת על כאב ראש ולחץ דם 150/95, נא להעריך"></textarea>
+    <div class="sheet-acts">
+      <button class="btn ghost" id="nrCancel">ביטול</button>
+      <button class="btn primary" id="nrSend">${CHECK} שליחה</button>
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+  ov.onclick=e=>{ if(e.target===ov) closeNR(); };
+  ov.querySelectorAll('[data-type]').forEach(b=> b.onclick=()=>{ ov.querySelectorAll('#nrTypes .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); nrType=b.dataset.type; });
+  $('#nrNormal').onclick=()=>{ nrUrgent=false; $('#nrNormal').classList.add('on'); $('#nrUrgent').classList.remove('on','urgent'); };
+  $('#nrUrgent').onclick=()=>{ nrUrgent=true; $('#nrUrgent').classList.add('on','urgent'); $('#nrNormal').classList.remove('on'); };
+  $('#nrCancel').onclick=closeNR; $('#nrSend').onclick=submitNR;
+}
+function closeNR(){ const o=$('#nrOverlay'); if(o) o.remove(); }
+function submitNR(){
+  if(!nrType){ toast('בחר/י סוג בקשה'); return; }
+  const detail=$('#nrDetail').value.trim(), room=nrRoom, name=nrName, type=nrType, urgent=nrUrgent;
+  closeNR();
+  state.requests=state.requests||[];
+  state.requests.push({id:'tmp'+Date.now(), room, name, type, detail, priority:urgent?'urgent':'normal', status:'new', createdBy:who(), createdAtMs:Date.now(), takenBy:'', doneBy:''});
+  expandedId = (state.patients.find(x=>norm(x.room)===norm(room))||{}).id || expandedId;
+  renderTable(); toast('הבקשה נשלחה');
+  bg({action:'reqAdd', room, name, type, detail, priority:urgent?'urgent':'normal', by:who()});
+}
+
+const file=$('#file');
+$('#uploadBtn').onclick=()=>file.click();
+file.onchange=()=> file.files[0] && handleImage(file.files[0]);
+async function handleImage(f){
+  const btn=$('#uploadBtn'), orig=btn.innerHTML; btn.innerHTML='<span class="spin"></span> קורא…';
+  try{ const {b64,mediaType}=await resize(f); await send({action:'extract', image:b64, mediaType}, 'הרשימה נטענה'); }
+  catch(e){ showBanner('קריאת התמונה נכשלה: '+e.message); }
+  finally{ btn.innerHTML=orig; file.value=''; }
+}
+function resize(f){ return new Promise((res,rej)=>{ const img=new Image(); img.onload=()=>{ const max=1600, sc=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement('canvas'); c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc); c.getContext('2d').drawImage(img,0,0,c.width,c.height); const u=c.toDataURL('image/jpeg',0.85); res({b64:u.split(',')[1], mediaType:'image/jpeg'}); }; img.onerror=rej; img.src=URL.createObjectURL(f); }); }
+$('#addPatBtn').onclick=()=>{ const room=prompt('מספר חדר/מיטה:'); if(room===null) return; const name=prompt('שם המטופלת:'); if(name===null) return; send({action:'patAdd', room:room.trim(), name:name.trim(), by:who()}); };
+$('#newdayBtn').onclick=()=>{ if(confirm('לפתוח יום חדש ולנקות את הלוח? פעולה זו אינה הפיכה.')) send({action:'newday'},'הלוח נוקה'); };
+
+let tT; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tT); tT=setTimeout(()=>t.classList.remove('show'),3000); }
+function showBanner(m){ const b=$('#banner'); b.textContent=m; b.classList.add('show'); }
+function hideBanner(){ $('#banner').classList.remove('show'); }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+setInterval(()=>{ if(!$('#nrOverlay')) refresh(); }, POLL_MS);
+api(null).then(render).catch(()=>showBanner('אין חיבור לשרת — בדוק/בדקי חיבור.'));
 </script>
 </body>
 </html>
