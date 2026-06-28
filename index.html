@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f5f5f7; --surface:#ffffff; --surface-2:#fbfbfd;
-    --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#a1a1a6; --line:#e7e7ec; --line-2:#dededf;
-    --accent:#0071e3; --accent-press:#0062c4;
-    --red:#ff3b30; --red-bg:#fdeceb; --red-tint:#fff6f5;
-    --orange:#ff9500; --orange-bg:#fef1df; --orange-tint:#fffaf2;
-    --green:#30a46c; --green-bg:#e7f6ee; --green-tint:#f4fbf7;
+    --bg:#f2f2fb; --surface:#ffffff; --surface-2:#f8f8fd;
+    --ink:#2b2b36; --ink2:#6c6c7a; --ink3:#a7a7b6; --line:#ececf4; --line-2:#e3e3ef;
+    --accent:#6d7ff0; --accent-press:#5a6ce0; --accent-soft:#eef0fe;
+    --red:#df7a78; --red-bg:#fbecec; --red-tint:#fdf6f6;
+    --orange:#d8a45c; --orange-bg:#faf2e3; --orange-tint:#fdf9f1;
+    --green:#5cb389; --green-bg:#e9f6ef; --green-tint:#f4fbf7;
     --r-card:18px; --r-ctl:12px;
     --sh-sm:0 1px 2px rgba(0,0,0,.05);
     --sh-md:0 6px 20px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
@@ -28,18 +28,27 @@
   .hidden{display:none !important}
   .ic{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; flex:none}
 
-  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.78); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); padding:11px 18px; display:flex; align-items:center; gap:12px}
-  header .logo{width:38px; height:38px; border-radius:11px; background:linear-gradient(160deg,#0a84ff,#0060c4); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,113,227,.3)}
-  header .logo svg{width:21px; height:21px; stroke:#fff; fill:none; stroke-width:1.8}
-  header .title{font-size:18px; font-weight:600; letter-spacing:-.02em; line-height:1.15}
-  header .sub{font-size:12px; color:var(--ink3); margin-top:1px}
-  .spacer{flex:1}
-  .idchip{display:flex; align-items:center; gap:7px; background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:8px 13px; font-size:14px; font-weight:600; color:var(--ink)}
+  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.82); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--line); padding:12px 16px; display:flex; align-items:flex-start; gap:10px}
+  .hside{flex:1; display:flex; align-items:center}
+  .hleft{justify-content:flex-start}
+  .hright{justify-content:flex-end}
+  .hcenter{flex:0 0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2px; padding-top:1px}
+  .hdate{font-size:19px; font-weight:600; color:var(--ink); letter-spacing:-.01em}
+  .hcharge{font-size:13px; color:var(--ink2)}
+  .chargebtn{border:none; background:transparent; font-size:13px; font-weight:600; color:var(--accent); padding:2px 6px; border-radius:7px}
+  .chargebtn:hover{background:var(--accent-soft)}
+  .idchip{display:flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--line-2); border-radius:999px; padding:7px 12px; font-size:13px; font-weight:600; color:var(--ink); box-shadow:var(--sh-sm)}
   .idchip .ic{color:var(--accent)}
+  .sync{display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--ink3); background:var(--surface); border:1px solid var(--line-2); border-radius:999px; padding:6px 11px; box-shadow:var(--sh-sm)}
+  .sync .sdot{width:8px; height:8px; border-radius:50%; background:var(--ink3); transition:.2s}
+  .sync.ok{color:var(--green)} .sync.ok .sdot{background:var(--green); box-shadow:0 0 0 3px var(--green-bg)}
+  .sync.load{color:var(--orange)} .sync.load .sdot{background:var(--orange)}
+  .sync.err{color:var(--red)} .sync.err .sdot{background:var(--red); box-shadow:0 0 0 3px var(--red-bg)}
+  @media(max-width:620px){ header{flex-direction:column; align-items:stretch} .hside{justify-content:center} .hcenter{order:-1} }
 
   .idgate{position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; background:var(--bg); padding:22px}
   .idgate .idbox{background:var(--surface); border:1px solid var(--line); border-radius:26px; padding:36px 30px; width:min(94vw,400px); box-shadow:var(--sh-md); text-align:center}
-  .idgate .mark{width:58px; height:58px; border-radius:17px; margin:0 auto 16px; background:linear-gradient(160deg,#0a84ff,#0060c4); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(0,113,227,.35)}
+  .idgate .mark{width:58px; height:58px; border-radius:17px; margin:0 auto 16px; background:linear-gradient(160deg,#8b9bf5,#6d7ff0); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(0,113,227,.35)}
   .idgate .mark svg{width:30px; height:30px; stroke:#fff; fill:none}
   .idgate h1{font-size:24px; font-weight:700; margin:0 0 3px; letter-spacing:-.02em}
   .idgate p{color:var(--ink2); margin:0 0 22px; font-size:15px}
@@ -55,7 +64,7 @@
   .btn{border:1px solid var(--line-2); background:var(--surface); border-radius:12px; padding:11px 15px; font-size:15px; font-weight:600; color:var(--ink); display:inline-flex; align-items:center; gap:8px; transition:.15s; box-shadow:var(--sh-sm)}
   .btn:active{transform:scale(.98)}
   .btn .ic{width:19px; height:19px}
-  .btn.primary{background:var(--accent); color:#fff; border-color:transparent; box-shadow:0 4px 14px rgba(0,113,227,.26)}
+  .btn.primary{background:var(--accent); color:#fff; border-color:transparent; box-shadow:0 4px 14px rgba(109,127,240,.32)}
   .btn.ghost{background:transparent; box-shadow:none; color:var(--ink2)}
   .grow{flex:1}
   .synced{font-size:12px; color:var(--ink3)}
@@ -83,7 +92,7 @@
   .chk.on.ready{background:var(--green); border-color:var(--green); color:#fff}
 
   .reqbtn{border:none; background:transparent; padding:6px; display:inline-flex; align-items:center; justify-content:center; gap:5px; border-radius:10px; color:var(--ink3); font-weight:600; font-size:14px}
-  .reqbtn .badge{display:inline-flex; align-items:center; gap:4px; background:var(--bg-accent,#e6f1fb); color:var(--accent); border-radius:999px; padding:3px 9px; font-weight:600}
+  .reqbtn .badge{display:inline-flex; align-items:center; gap:4px; background:var(--accent-soft); color:var(--accent); border-radius:999px; padding:3px 9px; font-weight:600}
   .reqbtn .badge.has{background:var(--accent); color:#fff}
   .reqbtn .ic{width:18px; height:18px}
   .rm{border:none; background:transparent; color:var(--ink3); padding:6px; border-radius:8px}
@@ -101,7 +110,7 @@
   .reqcard .mt{font-size:11.5px; color:var(--ink3); margin-top:2px; line-height:1.5}
   .pill{border-radius:999px; padding:3px 10px; font-size:12px; font-weight:600; white-space:nowrap}
   .pill.s-new{background:var(--red-bg); color:var(--red)}
-  .pill.s-progress{background:var(--orange-bg); color:#b06900}
+  .pill.s-progress{background:var(--orange-bg); color:#a76a1e}
   .pill.s-done{background:var(--green-bg); color:var(--green)}
   .pill.urgent{background:var(--red); color:#fff}
   .ract{display:flex; gap:7px; flex-wrap:wrap; margin-top:4px}
@@ -139,9 +148,9 @@
   .sheet-acts{display:flex; gap:10px; margin-top:24px; position:sticky; bottom:0; background:linear-gradient(transparent,var(--bg) 24%); padding:14px 0 4px}
   .sheet-acts .btn{flex:1; justify-content:center; padding:15px}
 
-  .toast{position:fixed; bottom:24px; left:50%; transform:translate(-50%,180%); background:rgba(29,29,31,.94); backdrop-filter:blur(10px); color:#fff; padding:13px 22px; border-radius:14px; font-size:15px; font-weight:600; z-index:400; transition:transform .35s cubic-bezier(.2,.9,.2,1); box-shadow:var(--sh-lg); max-width:90vw; text-align:center}
+  .toast{position:fixed; bottom:24px; left:50%; transform:translate(-50%,180%); background:rgba(43,43,54,.95); backdrop-filter:blur(10px); color:#fff; padding:13px 22px; border-radius:14px; font-size:15px; font-weight:600; z-index:400; transition:transform .35s cubic-bezier(.2,.9,.2,1); box-shadow:var(--sh-lg); max-width:90vw; text-align:center}
   .toast.show{transform:translate(-50%,0)}
-  .banner{display:none; background:var(--orange-bg); color:#8a5200; border:1px solid #ffe2b3; border-radius:13px; padding:11px 14px; font-size:14px; margin-bottom:13px}
+  .banner{display:none; background:var(--orange-bg); color:#8a5200; border:1px solid #f0dcb4; border-radius:13px; padding:11px 14px; font-size:14px; margin-bottom:13px}
   .banner.show{display:block}
   .spin{width:20px; height:20px; border:2.5px solid rgba(0,0,0,.12); border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
@@ -150,13 +159,17 @@
 <body>
 
 <header>
-  <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" stroke-width="2.2"/></svg></div>
-  <div>
-    <div class="title">לוח מחלקה · יולדות ב׳</div>
-    <div class="sub" id="dateLine"></div>
+  <div class="hside hright">
+    <button class="idchip" id="idChip"><svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span id="idChipName">זיהוי</span></button>
   </div>
-  <div class="spacer"></div>
-  <button class="idchip" id="idChip"><svg class="ic" viewBox="0 0 24 24" style="width:17px;height:17px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span id="idChipName">זיהוי</span></button>
+  <div class="hcenter">
+    <div class="hdate" id="dateLine"></div>
+    <div class="hcharge">אחות אחראית: <button class="chargebtn" id="chargeNurse">——</button></div>
+    <div class="hcharge">מתמחה אחראי: <button class="chargebtn" id="chargeIntern">——</button></div>
+  </div>
+  <div class="hside hleft">
+    <div class="sync" id="sync"><span class="sdot"></span><span id="syncTxt">מתחבר…</span></div>
+  </div>
 </header>
 
 <div class="idgate" id="idgate">
@@ -243,6 +256,11 @@ $('#idEnter').onclick = doId;
 $('#idChip').onclick = showId;
 function setDate(){ $('#dateLine').textContent = new Date().toLocaleDateString('he-IL',{weekday:'long', day:'numeric', month:'long', year:'numeric'}); }
 function hhmm(ms){ return ms ? new Date(ms).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}) : ''; }
+function setSync(s){ const el=$('#sync'); if(!el) return; el.className='sync '+s; $('#syncTxt').textContent = s==='ok'?'מסונכרן':s==='load'?'מסנכרן…':'אין חיבור'; }
+function renderHeader(){ const st=state.settings||{}; $('#chargeNurse').textContent = st.chargeNurse || '——'; $('#chargeIntern').textContent = st.chargeIntern || '——'; }
+function editCharge(key,label){ const cur=(state.settings||{})[key]||''; const v=prompt(label+':', cur); if(v===null) return; state.settings=state.settings||{}; state.settings[key]=v.trim(); renderHeader(); bg({action:'setSetting', key, value:v.trim()}); }
+$('#chargeNurse').onclick=()=>editCharge('chargeNurse','שם האחות האחראית');
+$('#chargeIntern').onclick=()=>editCharge('chargeIntern','שם המתמחה האחראי');
 
 async function api(payload){
   let url=ENDPOINT, opt;
@@ -252,11 +270,11 @@ async function api(payload){
   if(!res.ok) throw new Error('HTTP '+res.status);
   const data = await res.json();
   if(data.error) throw new Error(data.error);
-  state = data; return data;
+  state = data; setSync('ok'); return data;
 }
-async function refresh(){ try{ await api(null); render(); hideBanner(); }catch(e){ showBanner('אין חיבור כרגע — מנסה שוב…'); } }
-function bg(payload){ api(payload).then(()=>{ render(); hideBanner(); }).catch(()=>refresh()); }
-async function send(payload, ok){ try{ await api(payload); render(); hideBanner(); if(ok) toast(ok); }catch(e){ showBanner('הפעולה לא נשמרה: '+e.message); } }
+async function refresh(){ try{ await api(null); render(); hideBanner(); }catch(e){ setSync('err'); showBanner('אין חיבור כרגע — מנסה שוב…'); } }
+function bg(payload){ api(payload).then(()=>{ render(); hideBanner(); }).catch(()=>{ setSync('err'); refresh(); }); }
+async function send(payload, ok){ try{ await api(payload); render(); hideBanner(); if(ok) toast(ok); }catch(e){ setSync('err'); showBanner('הפעולה לא נשמרה: '+e.message); } }
 
 function roomNum(r){ const m=String(r||'').match(/\d+/); return m?+m[0]:999; }
 function ago(ms){ if(!ms) return ''; const m=Math.floor((Date.now()-ms)/60000); if(m<1) return 'עכשיו'; if(m<60) return 'לפני '+m+' ד׳'; return 'לפני '+Math.floor(m/60)+' שע׳'; }
@@ -264,7 +282,7 @@ function openReqs(room){ return (state.requests||[]).filter(r=>norm(r.room)===no
 function allReqs(room){ return (state.requests||[]).filter(r=>norm(r.room)===norm(room)); }
 function norm(s){ return String(s==null?'':s).trim().toLowerCase(); }
 
-function render(){ renderTable(); }
+function render(){ renderTable(); renderHeader(); }
 
 function renderTable(){
   const tb=$('#rows'); tb.innerHTML='';
@@ -389,7 +407,7 @@ function showBanner(m){ const b=$('#banner'); b.textContent=m; b.classList.add('
 function hideBanner(){ $('#banner').classList.remove('show'); }
 function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-setDate(); updateChip();
+setDate(); updateChip(); setSync('load'); renderHeader();
 if(me) hideId(); else showId();
 setInterval(()=>{ if(!$('#nrOverlay') && $('#idgate').style.display==='none') refresh(); }, POLL_MS);
 api(null).then(render).catch(()=>showBanner('אין חיבור לשרת — בדוק/בדקי חיבור.'));
