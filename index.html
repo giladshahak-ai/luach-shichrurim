@@ -98,13 +98,13 @@
   .reqcard .body{flex:1; min-width:0}
   .reqcard .ty{font-weight:600; font-size:15px}
   .reqcard .de{font-size:13px; color:var(--ink2); margin-top:1px}
-  .reqcard .mt{font-size:11.5px; color:var(--ink3); margin-top:2px}
+  .reqcard .mt{font-size:11.5px; color:var(--ink3); margin-top:2px; line-height:1.5}
   .pill{border-radius:999px; padding:3px 10px; font-size:12px; font-weight:600; white-space:nowrap}
   .pill.s-new{background:var(--red-bg); color:var(--red)}
   .pill.s-progress{background:var(--orange-bg); color:#b06900}
   .pill.s-done{background:var(--green-bg); color:var(--green)}
   .pill.urgent{background:var(--red); color:#fff}
-  .ract{display:flex; gap:7px; flex-wrap:wrap; margin-top:2px}
+  .ract{display:flex; gap:7px; flex-wrap:wrap; margin-top:4px}
   .mini{border:none; border-radius:9px; padding:8px 12px; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:5px}
   .mini .ic{width:15px; height:15px; stroke-width:2.4}
   .mini.take{background:var(--accent); color:#fff}
@@ -307,12 +307,11 @@ function detailRow(p){
   const cards = reqs.map(r=>{
     const urgent=r.priority==='urgent'&&r.status!=='done';
     let acts='';
-    if(r.status==='new') acts=`<button class="mini take" data-a="reqTake" data-id="${r.id}"><svg class="ic" viewBox="0 0 24 24"><path d="M5 9l4-4 2 2M9 5v8a4 4 0 0 0 8 0v-3"/></svg>אני מטפל/ת</button><button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}בוצע</button><button class="mini cancel" data-a="reqRemove" data-id="${r.id}">בטל</button>`;
-    else if(r.status==='progress') acts=`<button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}בוצע</button><button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎</button>`;
-    else acts=`<button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎ החזר</button>`;
+    if(r.status==='done') acts=`<button class="mini reopen" data-a="reqReopen" data-id="${r.id}">↩︎ החזר לפתוחות</button>`;
+    else acts=`<button class="mini done" data-a="reqDone" data-id="${r.id}">${CHECK}סמן כבוצע</button><button class="mini cancel" data-a="reqRemove" data-id="${r.id}">בטל</button>`;
     return `<div class="reqcard">
       <span class="tic">${svgIcon(r.type)}</span>
-      <div class="body"><div class="ty">${esc(r.type)}</div>${r.detail?`<div class="de">${esc(r.detail)}</div>`:''}<div class="mt">${r.createdBy?'ביקש/ה '+esc(r.createdBy):''}${r.createdAtMs?' · '+hhmm(r.createdAtMs)+' ('+ago(r.createdAtMs)+')':''}${r.takenBy?' · מטפל/ת '+esc(r.takenBy):''}</div><div class="ract">${acts}</div></div>
+      <div class="body"><div class="ty">${esc(r.type)}</div>${r.detail?`<div class="de">${esc(r.detail)}</div>`:''}<div class="mt">${r.createdBy?'ביקש/ה '+esc(r.createdBy):''}${r.createdAtMs?' · '+hhmm(r.createdAtMs):''}${r.status==='done'&&r.doneBy?'<br><span style="color:var(--green)">בוצע ע״י '+esc(r.doneBy)+(r.doneAtMs?' · '+hhmm(r.doneAtMs):'')+'</span>':''}</div><div class="ract">${acts}</div></div>
       <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">${urgent?'<span class="pill urgent">דחוף</span>':''}<span class="pill s-${r.status}">${STATUS_HE[r.status]}</span></div>
     </div>`;
   }).join('');
@@ -325,7 +324,7 @@ function detailRow(p){
     tr.querySelectorAll('[data-a]').forEach(b=> b.onclick=()=>{
       const a=b.dataset.a, id=b.dataset.id, r=(state.requests||[]).find(x=>x.id===id);
       if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; state.requests=state.requests.filter(x=>x.id!==id); renderTable(); bg({action:'reqRemove',id,by:who()}); return; }
-      if(r){ if(a==='reqTake'){r.status='progress';r.takenBy=who();} else if(a==='reqDone'){r.status='done';} else if(a==='reqReopen'){r.status='new';r.takenBy='';} renderTable(); }
+      if(r){ if(a==='reqDone'){r.status='done';r.doneBy=who();r.doneAtMs=Date.now();} else if(a==='reqReopen'){r.status='new';r.doneBy='';r.doneAtMs=0;} renderTable(); }
       bg({action:a,id,by:who()});
     });
     const ab=tr.querySelector('[data-add]'); if(ab) ab.onclick=()=>openNewReq(p.room,p.name);
