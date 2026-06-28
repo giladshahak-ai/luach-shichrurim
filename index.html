@@ -301,6 +301,11 @@ async function send(payload, okMsg){
   try{ await api(payload); render(); hideBanner(); if(okMsg) toast(okMsg); }
   catch(e){ if(e.message==='bad_code'){ showGate('הקוד אינו בתוקף — היכנס/י שוב.'); return; } showBanner('הפעולה לא נשמרה: '+e.message); }
 }
+/* שליחה ברקע — ה-UI כבר עודכן מיידית; כאן רק מסנכרנים מול השרת */
+function bg(payload){
+  api(payload).then(()=>{ render(); hideBanner(); })
+    .catch(e=>{ if(e.message==='bad_code') showGate('הקוד אינו בתוקף — היכנס/י שוב.'); else refresh(); });
+}
 
 /* ============ ניווט ============ */
 document.querySelectorAll('.seg button').forEach(t=> t.onclick = ()=>{
@@ -364,8 +369,15 @@ function renderRequests(){
   });
   box.querySelectorAll('[data-a]').forEach(b=> b.onclick = ()=>{
     const a=b.dataset.a, id=b.dataset.id;
-    if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; send({action:'reqRemove', id, by:who()}); }
-    else { send({action:a, id, by:who()}, a==='reqDone'?'סומן כבוצע':a==='reqTake'?'נלקח לטיפול':''); }
+    const r=(state.requests||[]).find(x=>x.id===id);
+    if(a==='reqRemove'){ if(!confirm('לבטל את הבקשה?')) return; state.requests=state.requests.filter(x=>x.id!==id); renderRequests(); bg({action:'reqRemove', id, by:who()}); return; }
+    if(r){
+      if(a==='reqTake'){ r.status='progress'; r.takenBy=who(); toast('נלקח לטיפול'); }
+      else if(a==='reqDone'){ r.status='done'; r.doneBy=who(); toast('סומן כבוצע'); }
+      else if(a==='reqReopen'){ r.status='new'; r.takenBy=''; }
+      renderRequests();
+    }
+    bg({action:a, id, by:who()});
   });
 }
 
@@ -387,11 +399,12 @@ function renderPatients(){
     box.appendChild(d);
   });
   box.querySelectorAll('.ds').forEach(b=> b.onclick=()=>{
-    const cur=(state.patients.find(x=>x.id===b.dataset.id)||{}).discharge;
-    const v = cur===b.dataset.v ? '' : b.dataset.v;
-    send({action:'patDischarge', id:b.dataset.id, discharge:v, by:who()});
+    const p=state.patients.find(x=>x.id===b.dataset.id);
+    const v = (p && p.discharge===b.dataset.v) ? '' : b.dataset.v;
+    if(p){ p.discharge=v; renderPatients(); }
+    bg({action:'patDischarge', id:b.dataset.id, discharge:v, by:who()});
   });
-  box.querySelectorAll('[data-rm]').forEach(b=> b.onclick=()=>{ if(confirm('להסיר מטופלת?')) send({action:'patRemove', id:b.dataset.rm, by:who()}); });
+  box.querySelectorAll('[data-rm]').forEach(b=> b.onclick=()=>{ if(!confirm('להסיר מטופלת?')) return; state.patients=state.patients.filter(x=>x.id!==b.dataset.rm); renderPatients(); bg({action:'patRemove', id:b.dataset.rm, by:who()}); });
 }
 function roomNum(r){ const m=String(r||'').match(/\d+/); return m?+m[0]:999; }
 
@@ -414,7 +427,7 @@ function openNewReq(){
     <div class="step">מה צריך מהרופא/ה?</div>
     <div class="grid" id="nrTypes">${typeOpts}</div>
     <div class="step">דחיפות</div>
-    <div class="urg"><button class="opt" id="nrNormal" style="justify-content:center">רגיל</button><button class="opt" id="nrUrgent" style="justify-content:center">דחוף</button></div>
+    <div class="urg"><button class="opt" id="nrNormal" style="justify-content:center" data-on="1">רגיל</button><button class="opt" id="nrUrgent" style="justify-content:center">דחוף</button></div>
     <div class="step">פרטים / הערה (לא חובה)</div>
     <textarea id="nrDetail" placeholder="לדוגמה: מתלוננת על כאב ראש ולחץ דם 150/95, נא להעריך"></textarea>
     <div class="sheet-acts">
@@ -436,7 +449,7 @@ function openNewReq(){
   ov.querySelectorAll('[data-type]').forEach(b=> b.onclick=()=>{
     ov.querySelectorAll('#nrTypes .opt').forEach(x=>x.classList.remove('on')); b.classList.add('on'); nrType=b.dataset.type;
   });
-  $('#nrNormal').onclick=()=>{ nrUrgent=false; $('#nrNormal').classList.add('on'); $('#nrUrgent').classList.remove('on','urgent'); };
+  $('#nrNormal').onclick=()=>{ nrUrgent=false; $('#nrNormal').classList.add('on'); $('#nrNormal').classList.remove('urgent'); $('#nrUrgent').classList.remove('on','urgent'); };
   $('#nrUrgent').onclick=()=>{ nrUrgent=true; $('#nrUrgent').classList.add('on','urgent'); $('#nrNormal').classList.remove('on'); };
   $('#nrCancel').onclick=closeNewReq;
   $('#nrSend').onclick=submitNewReq;
@@ -449,9 +462,13 @@ function submitNewReq(){
   if(!room){ toast('הקלד/י מספר חדר'); return; }
   if(!nrType){ toast('בחר/י סוג בקשה'); return; }
   const detail=$('#nrDetail').value.trim();
+  const type=nrType, urgent=nrUrgent;
   closeNewReq();
-  send({action:'reqAdd', room, name, type:nrType, detail, priority:nrUrgent?'urgent':'normal', by:who()}, 'הבקשה נשלחה');
-  curTab='requests'; document.querySelector('[data-tab="requests"]').click();
+  // הוספה מיידית ל-UI; השרת מסנכרן ברקע
+  state.requests=state.requests||[];
+  state.requests.push({id:'tmp'+Date.now(), room, name, type, detail, priority:urgent?'urgent':'normal', status:'new', createdBy:who(), createdAtMs:Date.now(), takenBy:'', doneBy:''});
+  curTab='requests'; document.querySelector('[data-tab="requests"]').click(); render(); toast('הבקשה נשלחה');
+  bg({action:'reqAdd', room, name, type, detail, priority:urgent?'urgent':'normal', by:who()});
 }
 $('#newReqBtn').onclick = openNewReq;
 
